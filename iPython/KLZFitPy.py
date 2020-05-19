@@ -305,43 +305,39 @@ class KLZFit:
         return
     
     def plotInterestingEvents(self,axis2):
-        for i in range(len(self.GravitationalWaves.Time)):
-            interesting_event = False
-            t0 = self.GravitationalWaves.Time[i]
+        for i in range(len(self.GravitationalWaves.Time)): # Loop through GW
+            t0 = self.GravitationalWaves.Time[i] # Absolute time of the GW
             NObs = 0
-            for j in range(len(self.Neutrinos.Time)):
-                x  = [self.Neutrinos.Time[j]-t0]
-                c = self.NeutrinoColors[j]
+            for j in range(len(self.Neutrinos.Time)): # Loop through Neutrinos
+                interesting_event = False
+                x  = [self.Neutrinos.Time[j]-t0] # Set the Absolute time of the neutrino relative to the GW.
+                c  = self.NeutrinoColors[j]
                 acceptance_time_range = self.GravitationalWaves_TimeRange[i][j] +self.Constants.NeutrinoEmissionRange[1]
                 
                 if x[0] > self.Constants.NeutrinoEmissionRange[0] and  x[0] < acceptance_time_range:
+                    # Found a neutrino in the time range.
                     interesting_event = True
                     NObs+=1
+                    # Plot it
                     fig, ax1 = plt.subplots()
                     
-                    xmin = self.Constants.NeutrinoEmissionRange[0]-200
-                    xmax = acceptance_time_range+1000
-                    ax1.axis([xmin,xmax,0,20])
+                    xmin = self.Constants.NeutrinoEmissionRange[0]-200 # axis
+                    xmax = acceptance_time_range+1000 # axis
+                    ax1.axis([xmin,xmax,0,20]) # axis
                                         
-                    window_start = self.Constants.NeutrinoEmissionRange[0]
+                    window_start = self.Constants.NeutrinoEmissionRange[0] # [0] is the curently -500s
                     window_end   = acceptance_time_range
-                    
                     time_window = acceptance_time_range - window_start
                     
                     if axis2:
-                        
                         ax2 = ax1.twinx()
                         ymax = 1000
                         ymin = 0.0001
                         ax2.axis([xmin,xmax,ymin,ymax])
                         ax2.set_ylabel('Counts in time window')
-                   
                         ax2.set_yscale("log")
-
                         ax2.axhline(self.NeutrinoRateExpectation*time_window,color ='k',alpha =1,linewidth = 0.5)
-
-                        #print(self.NeutrinoRateExpectation,time_window)
-                        NExp = str(np.round((self.NeutrinoRateExpectation)*time_window,3))
+                        NExp = str(np.round((self.NeutrinoRateExpectation)*time_window,3)) # The expected number of neutrinos
 
                         plt.text(xmax*0.98,self.NeutrinoRateExpectation*time_window*0.98,
                              'Exp. = '+NExp +' counts',rotation = 0,va = 'top',ha='right',size=8,color = 'k')
@@ -352,47 +348,41 @@ class KLZFit:
                         y_h = (self.NeutrinoRateExpectation+self.NeutrinoRateExpectationUncertainty)*time_window
                         ax2.fill([x_l,x_h,x_h,x_l],[y_l,y_l,y_h,y_h],color = 'k',alpha = 0.2)
 
-                        print(NObs)
-                        if NObs > 0:
-                            ax2.axhline(NObs,color ='k',alpha =1,linewidth = 0.5)
-                            plt.text(xmax*0.98,NObs*0.98,
-                                 'Obs. = '+str(NObs) +' counts',rotation = 0,va = 'bottom',ha='right',size=8,color = 'k')
+                        ax2.axhline(NObs,color ='k',alpha =1,linewidth = 0.5)
+                        plt.text(xmax*0.98,NObs*0.98,
+                             'Obs. = '+str(NObs) +' counts',rotation = 0,va = 'bottom',ha='right',size=8,color = 'k')
+                        
                         prob = np.round(scipy.stats.distributions.poisson.pmf(NObs, float(NExp)),3)
                         plt.text(xmax*0.98,ymax*0.9,
                              'P-value = '+str(prob) +' ',rotation = 0,va = 'top',ha='right',size=10,color = 'k')
 
 
                     
-                    y  = [self.Neutrinos.Energy[j]]
-                    ym = [-self.Neutrinos.Energy_m[j]]
+                    y  = [self.Neutrinos.Energy[j]] # Energy of the neutrino
+                    ym = [-self.Neutrinos.Energy_m[j]] # With uncertainties
                     yp = [self.Neutrinos.Energy_p[j]]
-                    
                     p = ax1.errorbar(x, y,yerr=[ym,yp], xerr = [0], fmt='o',ms=3, mew=1,color = c)
+                    
                     ax1.text(x[0],y[0]+0.1,
                          'E = '+str(np.round(y[0],1))+'MeV',rotation = 0,va = 'bottom',ha='left',size=10,color = c)
 
-                    
-                    ax1.vlines(window_end, ymin = 0,ymax = 100,linestyles='-',color =c)
-                    ax1.vlines(window_start, ymin = 0,ymax = 100,linestyles='-',color =c)
+                    ax1.vlines(window_end, ymin = 0,ymax = 100,linestyles='-',color = c)
+                    ax1.vlines(window_start, ymin = 0,ymax = 100,linestyles='-',color = c)
                     plt.axvspan( window_start,
                                  window_end, facecolor=c,alpha=0.2)
-                    
                     plt.axvspan( self.Constants.NeutrinoEmissionRange[0],
                                  self.Constants.NeutrinoEmissionRange[1], facecolor='k', alpha=0.1)
                     
-
-
-            if interesting_event:
-                plt.title(self.GravitationalWaves.Name[i]+' ('+str(int(self.GravitationalWaves.Distance[i]))+'Mpc)')
-                
-                ax1.vlines(0,ymin = 0,ymax = 100,linestyles='-',color = 'k',alpha = 0.2)
-                #ax1.vlines(self.Constants.NeutrinoEmissionRange[1],ymin = 0,ymax = 100,linestyles=':',color = c,alpha = 0.3)
-                ax1.set_ylabel('Energy [MeV]')
-                plt.xlabel('Time [s]')
-                #plt.legend()
-                plt.savefig(self.DataPaths.pdfLocation+'/plotInterestingEvents_'+self.GravitationalWaves.Name[i]+'.pdf', format='pdf', dpi=200, bbox_inches='tight')
-                print(self.DataPaths.pdfLocation+'/plotInterestingEvents_'+self.GravitationalWaves.Name[i]+'.pdf')
-                plt.show()
+                if interesting_event:
+                    plt.title(self.GravitationalWaves.Name[i]+' ('+str(int(self.GravitationalWaves.Distance[i]))+'Mpc)')
+                    ax1.vlines(0,ymin = 0,ymax = 100,linestyles='-',color = 'k',alpha = 0.2)
+                    #ax1.vlines(self.Constants.NeutrinoEmissionRange[1],ymin = 0,ymax = 100,linestyles=':',color = c,alpha = 0.3)
+                    ax1.set_ylabel('Energy [MeV]')
+                    plt.xlabel('Time [s]')
+                    #plt.legend()
+                    plt.savefig(self.DataPaths.pdfLocation+'/plotInterestingEvents_'+self.GravitationalWaves.Name[i]+'.pdf', format='pdf', dpi=200, bbox_inches='tight')
+                    print(self.DataPaths.pdfLocation+'/plotInterestingEvents_'+self.GravitationalWaves.Name[i]+'.pdf')
+                    plt.show()
             
         return 
     
@@ -423,7 +413,7 @@ class KLZFit:
             n_low = []      # Lower limit on Number observed.
             n_high = []     # Upper limit on Number observed.
             
-            u = np.arange(0, 6,0.05) # Signal mean. Hypotheses.
+            u = np.arange(0, 6,0.1) # Signal mean. Hypotheses.
             n = np.arange(0,  12,1) # Number of observed events.
   
             for hyp in u: # loop through the different amounts of signal hypotheses. 
@@ -489,40 +479,12 @@ class KLZFit:
         self.FCLowerLimits = np.asarray(lower_limit)
         self.FCUpperLimits = np.asarray(upper_limit)
         return 
-    
-    def calcFluence(self,plot=True):
-        E      = self.Constants.NeutrinoCenterEnergies
-        NT     = self.Constants.NTargetProtons
-        xs     = self.Constants.CrossSection
-        Deff    = self.Constants.DetectionEfficiency
-        Lambda = self.Constants.NeutrinoSpectrumPDF
-        
-        if plot:
-            fig, ax1 = plt.subplots()
-            
-        for i in range(len(self.GravitationalWaves.Name)):
-            lower_CL = self.FCLowerLimits[i]
-            upper_CL = self.FCUpperLimits[i]
-            fluence_lower = []
-            fluence_upper = []
-            for j in range(len(E)):
-                fluence_lower.append(lower_CL/(NT*xs[j]*Deff[j]*Lambda[j]))
-                fluence_upper.append(upper_CL/(NT*xs[j]*Deff[j]*Lambda[j]))
-                
-            if plot:
-                plt.plot(E,fluence_upper)
-                #plt.fill_between(E,fluence_lower,fluence_upper)
-            ax1.set_yscale("log")
-            plt.xlabel('Energy [MeV]')
-            plt.ylabel('Fluence [cm-2]')
-            lower_limit = []
-            
-        return
+
             
             
-    def plotTOF(self):
+    def plotTOF(self,Mn):
         def neutrinoTimeOfFlight(distance_Mpc,Energy_MeV):
-            mn = self.Constants.neutrinoMass
+            mn = Mn #self.Constants.neutrinoMass
             H0 = self.Constants.H0 * 1000/(3.08568e22)
             Ol = self.Constants.OmegaLambda
             Om =  self.Constants.OmegaMatter
@@ -548,7 +510,7 @@ class KLZFit:
         
         xmax = 20
         ymax = 100000
-        plt.text(20*0.98,100000*3, r'Time of Flight (M$_N$ = '+str(self.Constants.neutrinoMass)+' eV)',
+        plt.text(20*0.98,100000*3, r'Time of Flight (M$_N$ = '+str(Mn)+' eV)',
                  rotation = 0,va = 'top',ha='right',size=10,color = 'k')
             
         plt.plot([0,100],[500,500],'k')
@@ -582,7 +544,38 @@ class KLZFit:
         return
 
 
-            
+                
+    def calcFluence(self,plot=True):
+        E      = self.Constants.NeutrinoCenterEnergies
+        NT     = self.Constants.NTargetProtons
+        xs     = self.Constants.CrossSection
+        Deff   = self.Constants.DetectionEfficiency
+        Lambda = self.Constants.NeutrinoSpectrumPDF
+
+        if plot:
+            fig, ax1 = plt.subplots()
+
+        for i in range(len(self.GravitationalWaves.Name)):
+            lower_CL = self.FCLowerLimits[i]
+            upper_CL = self.FCUpperLimits[i]
+            fluence_lower = []
+            fluence_upper = []
+            for j in range(len(E)):
+                fluence_lower.append(lower_CL/(NT*xs[j]*Deff[j]*Lambda[j]))
+                fluence_upper.append(upper_CL/(NT*xs[j]*Deff[j]*Lambda[j]))
+
+            if plot:
+                plt.plot(E,fluence_upper,label = self.GravitationalWaves.Name[i])
+                #plt.fill_between(E,fluence_lower,fluence_upper)
+            ax1.set_yscale("log")
+            plt.xlabel('Energy [MeV]')
+            plt.ylabel('Fluence [cm-2]')
+            plt.legend()
+            lower_limit = []
+        plt.savefig(self.DataPaths.pdfLocation+'calcFluence.pdf', format='pdf', dpi=200, bbox_inches='tight')
+        print(self.DataPaths.pdfLocation+'calcFluence.pdf')
+        plt.show()
+        return
             
             
             
