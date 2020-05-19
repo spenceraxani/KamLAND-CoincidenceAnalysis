@@ -235,7 +235,7 @@ class KLZFit:
             
         return 
     
-    def plotAllEvents(self):
+    def plotAllEvents(self,plot_GW):
         import matplotlib.pyplot as plt
         
         ymax = 20
@@ -262,12 +262,13 @@ class KLZFit:
             GW_distance = self.GravitationalWaves.Distance[i]
             average_time_window = (self.Constants.NeutrinoEmissionRange[1]-self.Constants.NeutrinoEmissionRange[0])+neutrinoTimeOfFlight(GW_distance,self.NeutrinoEnergyAverage)
             GW_time = self.GravitationalWaves.Time[i]
-            plt.vlines(GW_time, ymin = 0,ymax = 100,linestyles='--')
-            plt.text(GW_time + self.Constants.LiveTime/100.,0.98*ymax,
-                     str(int(self.GravitationalWaves.Distance[i]))+'Mpc',rotation = 90,va = 'top',size=8)
-            
-            plt.axvspan( self.Constants.NeutrinoEmissionRange[0]+GW_time,
-                        self.Constants.NeutrinoEmissionRange[1]+GW_time, facecolor='k',alpha=0.2)
+            if plot_GW:
+                plt.vlines(GW_time, ymin = 0,ymax = 100,linestyles='--')
+                plt.text(GW_time + self.Constants.LiveTime/100.,0.98*ymax,
+                         str(int(self.GravitationalWaves.Distance[i]))+'Mpc',rotation = 90,va = 'top',size=8)
+
+                plt.axvspan( self.Constants.NeutrinoEmissionRange[0]+GW_time,
+                            self.Constants.NeutrinoEmissionRange[1]+GW_time, facecolor='k',alpha=0.2)
             NExp_accidental_events += 2 * self.NeutrinoRateExpectation * average_time_window 
         
         neutrino_colors = []
@@ -365,7 +366,7 @@ class KLZFit:
                     
                     ax1.text(x[0],y[0]+0.1,
                          'E = '+str(np.round(y[0],1))+'MeV',rotation = 0,va = 'bottom',ha='left',size=10,color = c)
-
+                    
                     ax1.vlines(window_end, ymin = 0,ymax = 100,linestyles='-',color = c)
                     ax1.vlines(window_start, ymin = 0,ymax = 100,linestyles='-',color = c)
                     plt.axvspan( window_start,
