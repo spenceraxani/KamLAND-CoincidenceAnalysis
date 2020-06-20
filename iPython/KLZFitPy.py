@@ -35,9 +35,8 @@ class Constants:
         self.LiveTimeEfficiency = self.LiveTime/self.RealTime 
         self.NeutrinoCenterEnergies = np.linspace(1.8,100,983)
         self.CrossSection        = np.asarray(self.NeutrinoCenterEnergies**2/11.)*1E-42 # FIX!!
+        
         self.DetectionEfficiency = np.asarray([(0.5*i)/(100)+0.5 for i in self.NeutrinoCenterEnergies])
-        
-        
         em2_spectrum = np.asarray([i**-2 for i in self.NeutrinoCenterEnergies])
         em2_spectrum_pdf = em2_spectrum/sum(em2_spectrum)
         flat_spectrum = np.asarray([1. for i in self.NeutrinoCenterEnergies])
@@ -50,11 +49,12 @@ class Constants:
         np.random.seed(seed)
         return
         
-    def setCrossSection(self, cross_section):
-        if len(cross_section)!= len(self.NeutrinoCenterEnergies):
-            print('Error')
-        else:
-            self.CrossSection = cross_section
+    def setCrossSection(self, cross_section_file):
+        # lets have the cross_section be a file:
+        energy, cs = np.loadtxt(cross_section_file,unpack=True)
+        # linear interp to the desired energy values
+        cross_section = np.interp(self.NeutrinoCenterEnergies, energy, cs)
+        self.CrossSection = cross_section
         return 
 
     def setDetectionEfficiency(self, detection_efficiency):
