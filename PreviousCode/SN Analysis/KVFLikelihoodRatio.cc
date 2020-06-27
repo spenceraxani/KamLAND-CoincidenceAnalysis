@@ -1,0 +1,466 @@
+#include "KVFLikelihoodRatio.hh"
+#include <fstream>
+#include <iostream>
+#include <cmath>
+#include <stdlib.h>
+
+using namespace std;
+
+
+bool KVFLikelihoodRatio :: _isSetConstant = false;
+bool KVFLikelihoodRatio :: _isSetPDF = false;
+
+int KVFLikelihoodRatio :: _RunNumber = 0;
+
+int KVFLikelihoodRatio :: _LastPeriodID = -1;
+
+int KVFLikelihoodRatio :: _LRVersion = 0;
+
+double* KVFLikelihoodRatio :: Likelihood_Ratio_Constant = new double[78];
+
+int KVFLikelihoodRatio :: index_Ep = 0;
+
+const double KVFLikelihoodRatio :: R_Max = 600.0; // cm
+
+bool KVFLikelihoodRatio :: Resolution_enable20inch = false;
+//bool KVFLikelihoodRatio :: Resolution_enable20inch = true;
+
+const double KVFLikelihoodRatio :: Energy_np = 2.211; // MeV
+const double KVFLikelihoodRatio :: Energy_nC = 5.061; // MeV
+const double KVFLikelihoodRatio :: Energy_np_Resolution_disable20inch = 0.074 * sqrt(Energy_np); // w/o 20inch
+const double KVFLikelihoodRatio :: Energy_nC_Resolution_disable20inch = 0.074 * sqrt(Energy_nC); // w/o 20inch
+const double KVFLikelihoodRatio :: Energy_np_Resolution_enable20inch = 0.068 * sqrt(Energy_np); // w/ 20inch
+const double KVFLikelihoodRatio :: Energy_nC_Resolution_enable20inch = 0.068 * sqrt(Energy_nC); // w/ 20inch
+const double KVFLikelihoodRatio :: Energy_np_Resolution_disable20inch_after_1st_distillation = 0.077 * sqrt(Energy_np); // w/o 20inch
+const double KVFLikelihoodRatio :: Energy_nC_Resolution_disable20inch_after_1st_distillation = 0.077 * sqrt(Energy_nC); // w/o 20inch
+const double KVFLikelihoodRatio :: Energy_np_Resolution_enable20inch_after_1st_distillation = 0.068 * sqrt(Energy_np); // w/ 20inch
+const double KVFLikelihoodRatio :: Energy_nC_Resolution_enable20inch_after_1st_distillation = 0.068 * sqrt(Energy_nC); // w/ 20inch
+const double KVFLikelihoodRatio :: Energy_np_Resolution_disable20inch_after_2nd_distillation = 0.083 * sqrt(Energy_np); // w/o 20inch
+const double KVFLikelihoodRatio :: Energy_nC_Resolution_disable20inch_after_2nd_distillation = 0.083 * sqrt(Energy_nC); // w/o 20inch
+const double KVFLikelihoodRatio :: Energy_np_Resolution_enable20inch_after_2nd_distillation = 0.076 * sqrt(Energy_np); // w/ 20inch
+const double KVFLikelihoodRatio :: Energy_nC_Resolution_enable20inch_after_2nd_distillation = 0.076 * sqrt(Energy_nC); // w/ 20inch
+const double KVFLikelihoodRatio :: CaptureRatio = 0.9948;
+
+const double KVFLikelihoodRatio :: CaptureTime = 211.2; // usec
+
+double* KVFLikelihoodRatio :: PDF_dR_SG_Hist = new double[40];
+double** KVFLikelihoodRatio :: PDF_BG_Hist = new double*[78];
+int KVFLikelihoodRatio :: NofPDF_dR_SG = 0;
+int KVFLikelihoodRatio :: NofPDF_BG = 0;
+
+double KVFLikelihoodRatio :: Normalize_dR_SG = 0;
+double KVFLikelihoodRatio :: Normalize_dT_SG = 0;
+double* KVFLikelihoodRatio :: Normalize_BG = new double[78];
+
+double KVFLikelihoodRatio :: dummy = 0;
+
+
+int KVFLikelihoodRatio :: PeriodID(int RunNumber)
+{
+  if(RunNumber==0){
+    cerr << "ERROR : invaid run number" << endl;
+    abort();
+  }
+
+  int pid = -1;
+
+  if(RunNumber<2986){
+    pid = 0;
+  }
+  else if(RunNumber<6802){
+    pid = 1;
+  }
+  else if(RunNumber<6954 || (7871<RunNumber && 8502>RunNumber)){
+    pid = 2;
+  }
+  else if(RunNumber<=7871){
+    pid = 3;
+  }
+  else{
+    pid = 4;
+  }
+
+  return pid;
+}
+
+
+bool KVFLikelihoodRatio :: setConstant()
+{
+  if(_isSetConstant==true) return true;
+
+  int pid = PeriodID(_RunNumber);
+
+  if(!(pid==0 || pid==1 || pid==2 || pid==3 || pid==4)){
+    cerr << "ERROR : invalid pid" << endl;
+    abort();
+  }
+
+  // @ teena
+  //  string filename_constant_3rdresult = "/data/sp03/tmpdata/hiroko/ReactorAnalysis/LikelihoodSelectionTable-100413/Likelihood_Ratio_Constant.dat";
+
+  // @ abby
+  string filename_constant_3rdresult = "/userdata/work/hiroko/ReactorAnalysis/LikelihoodSelectionTable-100413/Likelihood_Ratio_Constant.dat";
+  
+  // disable 20inch
+  string filename_constant[5] = {
+    "/userdata/work/hiroko/ReactorAnalysis/LikelihoodSelectionTable-100413/LratioCut-LH0.dat", 
+    "/userdata/work/hiroko/ReactorAnalysis/LikelihoodSelectionTable-100413/LratioCut-LH1.dat", 
+    "/userdata/work/hiroko/ReactorAnalysis/LikelihoodSelectionTable-100413/LratioCut-LH2.dat", 
+    "/userdata/work/hiroko/ReactorAnalysis/LikelihoodSelectionTable-100413/LratioCut-LH3.dat", 
+    "/userdata/work/hiroko/ReactorAnalysis/LikelihoodSelectionTable-100413/LratioCut-LH4.dat"};
+
+  //string filename_constant[4] = {"LratioCut-0.dat.old", "LratioCut-1.dat.old", "LratioCut-2.dat", "LratioCut-3.dat"}; // Yuri-san version
+  
+  string filename;
+
+  if(_LRVersion==1){
+    filename = filename_constant_3rdresult;
+  }
+  else if(_LRVersion==2){
+    filename = filename_constant[pid];
+  }
+  else{
+    cerr << "ERROR : invalid version" << endl;
+    abort();
+  }
+  
+  ifstream fLikelihood_Ratio_Constant(filename.c_str());
+  
+  if(!fLikelihood_Ratio_Constant){
+    cerr << "Cannot open Likelihood_Ratio_Constant" << endl;
+    abort();
+  }
+  
+  int n=0;
+  while(fLikelihood_Ratio_Constant >> dummy >> Likelihood_Ratio_Constant[n]){
+    n++;
+  }
+  
+  _isSetConstant = true;
+  
+  return true;
+}
+
+
+bool KVFLikelihoodRatio :: setPDF()
+{
+  if(_isSetPDF==true) return true;
+  
+  int pid = PeriodID(_RunNumber);
+
+  if(!(pid==0 || pid==1 || pid==2 || pid==3 || pid==4)){
+    cerr << "ERROR : invalid pid" << endl;
+    abort();
+  }
+  
+  int N;
+  
+  static bool isSetPDF_BG_Hist = false;
+
+  if(isSetPDF_BG_Hist==false){
+    
+    for(int i=0;i<78;i++){
+      PDF_BG_Hist[i] = new double[4800];
+    }
+    
+    isSetPDF_BG_Hist = true;
+  }
+  
+  // neutrino p.d.f.
+  
+  // dR
+  ifstream f_dR_SG("/userdata/work/hiroko/ReactorAnalysis/LikelihoodSelectionTable-100413/Efficiency-SpaceCorrelation-dR_2.6MeV.dat");
+  
+  // initialize
+  for(int i=0;i<78;i++){
+    Normalize_dR_SG = 0;
+  }
+  
+  NofPDF_dR_SG = 0;
+  while(f_dR_SG >> dummy >> PDF_dR_SG_Hist[NofPDF_dR_SG]){
+    Normalize_dR_SG += PDF_dR_SG_Hist[NofPDF_dR_SG];
+
+    NofPDF_dR_SG++;
+  }
+  
+  // dT
+  Normalize_dT_SG = exp(-0.5/CaptureTime) - exp(-1000.0/CaptureTime);
+
+
+  // accidental p.d.f.
+  // 1. dR 16 bin (< 50, 50-60, ... , 190-200 cm)
+  // 2. Rp 10 bin (< 500, 500-525, ... , 675-700, > 700 cm)
+  // 3. Rd 10 bin (< 500, 500-525, ... , 675-700, > 700 cm)
+  // 4. Ed  3 bin (1.8-1.9 && 2.5-2.6, 1.9-2.0 && 2.4-2.5, 2.0-2.4 MeV)
+  // 5. Ep 78 bin (< 0.9, 0.9-1.0, ... , > 8.5 MeV)
+
+  string filename_BG_3rdresult = "/userdata/work/hiroko/ReactorAnalysis/LikelihoodSelectionTable-100413/Accidental_Tight.hist";
+
+
+  string filename_BG[5] = 
+    {"/userdata/work/hiroko/ReactorAnalysis/LikelihoodSelectionTable-100413/pdf-acci-LH0.dat", 
+     "/userdata/work/hiroko/ReactorAnalysis/LikelihoodSelectionTable-100413/pdf-acci-LH1.dat", 
+     "/userdata/work/hiroko/ReactorAnalysis/LikelihoodSelectionTable-100413/pdf-acci-LH2.dat", 
+     "/userdata/work/hiroko/ReactorAnalysis/LikelihoodSelectionTable-100413/pdf-acci-LH3.dat", 
+     "/userdata/work/hiroko/ReactorAnalysis/LikelihoodSelectionTable-100413/pdf-acci-LH4.dat"};
+
+
+  //   string filename_BG[4] = 
+  //     {"/data/sp04/tmpdata/konno/Likelihood-Ratio/pdf-acci-0.dat", 
+  //      "/data/sp04/tmpdata/konno/Likelihood-Ratio/pdf-acci-1.dat", 
+  //      "/data/sp04/tmpdata/konno/Likelihood-Ratio/pdf-acci-2-8532.dat", 
+  //      "/data/sp04/tmpdata/konno/Likelihood-Ratio/pdf-acci-3.dat"};
+
+  string filename;
+
+  if(_LRVersion==1){
+    filename = filename_BG_3rdresult;
+  }
+  else if(_LRVersion==2){
+    filename = filename_BG[pid];
+  }
+  else{
+    cerr << "ERROR : invalid version" << endl;
+    abort();
+  }
+  
+  ifstream f_BG(filename.c_str());
+  
+  double Hist;
+
+  // initialize
+  for(int i=0;i<78;i++){
+    Normalize_BG[i] = 0;
+  }
+  
+  N = 0;
+  while(f_BG >> dummy >> Hist){
+    index_Ep = N / 4800;
+    if(index_Ep<0 || index_Ep>=78){
+      cerr << "ERROR : set PDF" << endl;
+      abort();
+    }
+    
+    NofPDF_BG = N % 4800;
+    if(NofPDF_BG<0 || NofPDF_BG>=4800){
+      cerr << "ERROR : set PDF" << endl;
+      abort();
+    }
+
+    PDF_BG_Hist[index_Ep][NofPDF_BG] = Hist;
+    Normalize_BG[index_Ep] += Hist;
+    N++;
+  }
+
+  _isSetPDF = true;
+
+  return true;
+}
+
+
+bool KVFLikelihoodRatio :: changeRun(int RunNumber)
+{
+  _RunNumber = RunNumber;
+
+  int pid = PeriodID(_RunNumber);
+  
+  if(!(pid==0 || pid==1 || pid==2 || pid==3 || pid==4)){
+    cerr << "ERROR : invalid pid" << endl;
+    abort();
+  }
+  
+  if(_LastPeriodID==pid) return true;
+  
+  _isSetConstant = false;
+  _isSetPDF = false;
+  
+  setConstant();
+  setPDF();  
+  
+  _LastPeriodID = pid;
+
+  return true;
+}
+
+
+double KVFLikelihoodRatio :: Likelihood_Ratio_Cut()
+{
+  if(!setConstant()){
+    cerr << "KVFLikelihoodRatio :: Cannot set constant " << endl;
+    abort();
+  }
+  
+  return Likelihood_Ratio_Constant[index_Ep];
+}
+
+
+bool KVFLikelihoodRatio :: set_Ep(double Ep){
+  // SG (neutrino) --> constant
+  
+  // BG (accidental)
+  index_Ep = int((Ep-0.9+0.1) / 0.1);
+  
+  if(index_Ep<0) index_Ep = 0;
+  //  if(index_Ep>=77) index_Ep = 77;
+  if(index_Ep>=77) index_Ep = 76; // for High Energy Analysis
+
+  return true;
+}
+
+
+double KVFLikelihoodRatio :: Likelihood_Ratio(double dR, double Rp, double Rd, double Ed, double dT){
+  double Likelihood_SG = PDF_SG(dR, Rp, Rd, Ed, dT);
+  double Likelihood_BG = PDF_BG(dR, Rp, Rd, Ed, dT);
+
+  double Likelihood_Total = Likelihood_SG + Likelihood_BG;
+  double Likelihood_Ratio = 0;
+	  
+  if(Likelihood_Total>0){
+    Likelihood_Ratio = Likelihood_SG / Likelihood_Total;
+  }
+  
+  return Likelihood_Ratio;
+}
+
+
+// SG (neutrino)
+double KVFLikelihoodRatio :: PDF_SG(double dR, double Rp, double Rd, double Ed, double dT){
+  if(!setPDF()){
+    cerr << "KVFLikelihoodRatio :: Cannot set pdf " << endl;
+    abort();
+  }
+
+  return PDF_dR_SG(dR) * PDF_Rp_SG(Rp) * PDF_Rd_SG(Rd) * PDF_Ed_SG(Ed) * PDF_dT_SG(dT);
+}
+
+
+// BG (accidental)
+double KVFLikelihoodRatio :: PDF_BG(double dR, double Rp, double Rd, double Ed, double dT){
+  if(!setPDF()){
+    cerr << "KVFLikelihoodRatio :: Cannot set pdf " << endl;
+    abort();
+  }
+  
+  // 1. dR 16 bin (< 50, 50-60, ... , 190-200 cm)
+  // 2. Rp 10 bin (< 500, 500-525, ... , 675-700, > 700 cm)
+  // 3. Rd 10 bin (< 500, 500-525, ... , 675-700, > 700 cm)
+  // 4. Ed  3 bin (1.8-1.9 && 2.5-2.6, 1.9-2.0 && 2.4-2.5, 2.0-2.4 MeV)
+  // 5. Ep 78 bin (< 0.9, 0.9-1.0, ... , > 8.5 MeV)
+  
+  // dR
+  int index_dR = int(dR / 10.0) - 4;
+  double BinWidth_dR = 10.0; // cm
+  
+  if(index_dR<0) index_dR = 0;
+  if(index_dR>=16) return 0;
+  if(index_dR==0) BinWidth_dR = 50.0;
+  
+  // Rp
+  int index_Rp = int(Rp / 25.0) - 19;
+  double BinWidth_Rp = 25.0; // cm
+  
+  if(index_Rp<0) index_Rp = 0;
+  if(index_Rp>=9) index_Rp = 9;
+  if(index_Rp==0) BinWidth_Rp = 500.0;
+  
+  // Rd
+  int index_Rd = int(Rd / 25.0) - 19;
+  double BinWidth_Rd = 25.0; // cm
+
+  if(index_Rd<0) index_Rd = 0;
+  if(index_Rd>=9) index_Rd = 9;
+  if(index_Rd==0) BinWidth_Rd = 500.0;
+
+  // Ed
+  int index_Ed;
+  double BinWidth_Ed; // MeV
+  if((Ed>=1.8 && Ed<1.9) || (Ed>=2.5 && Ed<2.6)) index_Ed = 0;
+  else if((Ed>=1.9 && Ed<2.0) || (Ed>=2.4 && Ed<2.5)) index_Ed = 1;
+  else if(Ed>=2.0 && Ed<2.4) index_Ed = 2;
+  else return 0;
+  if(index_Ed==0) BinWidth_Ed = 0.2;
+  if(index_Ed==1) BinWidth_Ed = 0.2;
+  if(index_Ed==2) BinWidth_Ed = 0.4;
+
+  int index = index_dR + index_Rp * 16 + index_Rd * 160 + index_Ed * 1600;
+  
+  return (PDF_BG_Hist[index_Ep][index] / BinWidth_dR / BinWidth_Rp / BinWidth_Rd / BinWidth_Ed / Normalize_BG[index_Ep]) * PDF_dT_BG(dT);
+}
+
+
+double KVFLikelihoodRatio :: PDF_dR_SG(double dR){
+  int index_dR = int(dR / 5.0);
+  double BinWidth_dR = 5.0;
+
+  if(index_dR>=NofPDF_dR_SG) return 0;
+
+  return PDF_dR_SG_Hist[index_dR] / BinWidth_dR / Normalize_dR_SG; // /cm
+}
+
+
+double KVFLikelihoodRatio :: PDF_Rp_SG(double Rp){
+  if(Rp>=R_Max) return 0;
+
+  return 3.0 * pow(Rp, 2) / pow(R_Max, 3); // /cm
+}
+
+
+double KVFLikelihoodRatio :: PDF_Rd_SG(double Rd){
+  if(Rd>=R_Max) return 0;
+  
+  return 3.0 * pow(Rd, 2) / pow(R_Max, 3); // /cm
+}
+
+
+double KVFLikelihoodRatio :: PDF_Ed_SG(double Ed){
+  if(Ed<1.8) return 0;
+  
+  double Energy_np_Resolution;
+  double Energy_nC_Resolution;
+  
+  if(Resolution_enable20inch==false){
+    if(_RunNumber<6802){
+      Energy_np_Resolution = Energy_np_Resolution_disable20inch;
+      Energy_nC_Resolution = Energy_nC_Resolution_disable20inch;
+    }
+    else if(_RunNumber<8292){
+      Energy_np_Resolution = Energy_np_Resolution_disable20inch_after_1st_distillation;
+      Energy_nC_Resolution = Energy_nC_Resolution_disable20inch_after_1st_distillation;
+    }
+    else{
+      Energy_np_Resolution = Energy_np_Resolution_disable20inch_after_2nd_distillation;
+      Energy_nC_Resolution = Energy_nC_Resolution_disable20inch_after_2nd_distillation;
+    }
+  }
+  else{
+    if(_RunNumber<6802){
+      Energy_np_Resolution = Energy_np_Resolution_enable20inch;
+      Energy_nC_Resolution = Energy_nC_Resolution_enable20inch;
+    }
+    else if(_RunNumber<8292){
+      Energy_np_Resolution = Energy_np_Resolution_enable20inch_after_1st_distillation;
+      Energy_nC_Resolution = Energy_nC_Resolution_enable20inch_after_1st_distillation;
+    }
+    else{
+      Energy_np_Resolution = Energy_np_Resolution_enable20inch_after_2nd_distillation;
+      Energy_nC_Resolution = Energy_nC_Resolution_enable20inch_after_2nd_distillation;
+    }
+  }
+  
+  return CaptureRatio / sqrt(2.0 * M_PI) / Energy_np_Resolution * exp(-pow(Energy_np - Ed, 2) / 2.0 / pow(Energy_np_Resolution, 2)) 
+    + (1.0 - CaptureRatio) / sqrt(2.0 * M_PI) / Energy_nC_Resolution * exp(-pow(Energy_nC - Ed, 2) / 2.0 / pow(Energy_nC_Resolution, 2)); // /MeV
+}
+
+
+double KVFLikelihoodRatio :: PDF_dT_SG(double dT){
+  if(dT<0.5 || dT>=1000.0) return 0;
+  
+  return 1.0 / CaptureTime * exp(-dT/CaptureTime) / Normalize_dT_SG; // /musec
+}
+
+
+double KVFLikelihoodRatio :: PDF_dT_BG(double dT){
+  if(dT<0.5 || dT>=1000.0) return 0;
+  
+  return 1.0 / (1000.0 - 0.5); // /musec
+}

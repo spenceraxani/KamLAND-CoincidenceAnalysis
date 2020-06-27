@@ -1,0 +1,21 @@
+
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-01
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-02
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-03
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-04
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-05
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-06
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-07
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-08
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-09
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-10
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-11
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-12
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-13
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-14
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-15
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-16
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-17
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-18
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-19
+bsub -q kamland -o /dev/null  ./DelayedCoincidence-and-Veto-Accidental-Fast.sh ./log/DelayedCoincidence-and-Veto-Accidental-Fast.log-130610-20

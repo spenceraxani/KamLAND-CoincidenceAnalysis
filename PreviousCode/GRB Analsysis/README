@@ -1,0 +1,8 @@
+python  make_coincidencelist.py
+python  search_coincidencelist.py
+python cal_totalwindowtime.py
+
+%cd ../grblist
+%python -i plot_grb1.py
+
+python  cal_livetime.py

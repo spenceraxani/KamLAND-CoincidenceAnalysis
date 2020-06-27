@@ -1,0 +1,360 @@
+Run: 016043
+  TimeDiff =  625.200[microsec]  VertexDiff =   79.548[cm]
+  Prompt (   211054): energy=   1.827[MeV]   trigger=0x0a000002   R= 584.55[cm]   Status=0
+                    9.88    -44.06    582.80
+  Delayed(   211055): energy=   3.001[MeV]   trigger=0x0b000002   R= 533.95[cm]   Status=0
+                  -30.35      3.24    533.08
+Likelihood Ratio (Measured)1 (Creiteria)0.86575
+Rp, Rd 584.547 533.953
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff =  470.350[microsec]  VertexDiff =  114.228[cm]
+  Prompt (   483717): energy=   3.078[MeV]   trigger=0x0a000002   R= 517.63[cm]   Status=0
+                   -4.94      0.67    517.61
+  Delayed(   483718): energy=   3.311[MeV]   trigger=0x0b000002   R= 563.92[cm]   Status=0
+                   16.38    107.02    553.43
+Likelihood Ratio (Measured)1 (Creiteria)0.13325
+Rp, Rd 517.634 563.921
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff =  169.775[microsec]  VertexDiff =   33.350[cm]
+  Prompt (  1204911): energy=   1.617[MeV]   trigger=0x0a000002   R= 557.30[cm]   Status=0
+                    9.88      2.31    557.21
+  Delayed(  1204914): energy=   2.342[MeV]   trigger=0x0b000002   R= 554.15[cm]   Status=0
+                   -1.92    -28.65    553.41
+Likelihood Ratio (Measured)0.902901 (Creiteria)0.91705
+Rp, Rd 557.302 554.154
+Muon veto 0 0 0 0 1 0 
+
+Run: 016043
+  TimeDiff = 1043.175[microsec]  VertexDiff =   84.202[cm]
+  Prompt (  1707201): energy=   3.130[MeV]   trigger=0x0a000002   R= 593.69[cm]   Status=0
+                   38.75     37.48    591.24
+  Delayed(  1707203): energy=   1.923[MeV]   trigger=0x0b000002   R= 536.95[cm]   Status=0
+                   31.83    -25.17    535.41
+Likelihood Ratio (Measured)0 (Creiteria)0.08845
+Rp, Rd 593.693 536.946
+Muon veto 0 0 1 0 1 0 
+
+Run: 016043
+  TimeDiff = 2299.650[microsec]  VertexDiff =   80.549[cm]
+  Prompt (  1819987): energy=   1.768[MeV]   trigger=0x0a000002   R= 597.54[cm]   Status=0
+                  167.52    572.09    -41.33
+  Delayed(  1819989): energy=   2.519[MeV]   trigger=0x0b000002   R= 578.98[cm]   Status=0
+                   90.08    568.43    -63.19
+Likelihood Ratio (Measured)0 (Creiteria)0.88615
+Rp, Rd 597.543 578.982
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff = 2098.725[microsec]  VertexDiff =  140.186[cm]
+  Prompt (  2811762): energy=   1.943[MeV]   trigger=0x0a000002   R= 495.71[cm]   Status=0
+                  -45.93     80.71    486.93
+  Delayed(  2811767): energy=   3.368[MeV]   trigger=0x0b000002   R= 594.55[cm]   Status=0
+                   25.10     23.78    593.54
+Likelihood Ratio (Measured)0 (Creiteria)0.82965
+Rp, Rd 495.706 594.546
+Muon veto 0 0 0 0 0 1 
+
+Run: 016043
+  TimeDiff = 1607.025[microsec]  VertexDiff =   20.808[cm]
+  Prompt (  3174046): energy=   1.838[MeV]   trigger=0x0a000002   R= 581.14[cm]   Status=0
+                    2.35     26.46    580.53
+  Delayed(  3174050): energy=   2.214[MeV]   trigger=0x0a000002   R= 568.23[cm]   Status=0
+                    4.26      9.86    568.13
+Likelihood Ratio (Measured)0 (Creiteria)0.86575
+Rp, Rd 581.138 568.232
+Muon veto 0 0 1 0 0 1 
+
+Run: 016043
+  TimeDiff =  194.100[microsec]  VertexDiff =   21.529[cm]
+  Prompt (  4107621): energy=   3.433[MeV]   trigger=0x0a000002   R= 537.62[cm]   Status=0
+                  -77.80   -516.86    125.86
+  Delayed(  4107622): energy=   2.009[MeV]   trigger=0x0b000002   R= 534.17[cm]   Status=0
+                  -56.47   -515.42    128.40
+Likelihood Ratio (Measured)1 (Creiteria)0.01245
+Rp, Rd 537.622 534.166
+Muon veto 0 0 0 0 1 0 
+
+Run: 016043
+  TimeDiff = 2239.925[microsec]  VertexDiff =  263.505[cm]
+  Prompt (  4185936): energy=   2.359[MeV]   trigger=0x0a000002   R= 597.80[cm]   Status=0
+                 -143.29    534.08   -227.14
+  Delayed(  4185937): energy=   2.649[MeV]   trigger=0x0a000002   R= 592.17[cm]   Status=0
+                   61.45    455.58   -373.27
+Likelihood Ratio (Measured)0 (Creiteria)0.74765
+Rp, Rd 597.801 592.165
+Muon veto 0 0 1 0 0 0 
+
+Run: 016043
+  TimeDiff =  196.325[microsec]  VertexDiff =  169.921[cm]
+  Prompt (  4221522): energy=   2.941[MeV]   trigger=0x0a000002   R= 597.93[cm]   Status=0
+                 -534.92    171.49   -204.86
+  Delayed(  4221523): energy=   2.537[MeV]   trigger=0x0b000002   R= 572.34[cm]   Status=0
+                 -428.57    173.45   -337.37
+Likelihood Ratio (Measured)0.000148349 (Creiteria)0.31225
+Rp, Rd 597.926 572.342
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff = 1271.425[microsec]  VertexDiff =  161.012[cm]
+  Prompt (  4345842): energy=   1.759[MeV]   trigger=0x0a000002   R= 582.72[cm]   Status=0
+                  262.83    490.33    173.39
+  Delayed(  4345843): energy=   2.370[MeV]   trigger=0x0a000002   R= 576.81[cm]   Status=0
+                  143.61    552.20     84.60
+Likelihood Ratio (Measured)0 (Creiteria)0.88615
+Rp, Rd 582.724 576.807
+Muon veto 0 0 0 0 1 0 
+
+Run: 016043
+  TimeDiff = 2491.225[microsec]  VertexDiff =   60.619[cm]
+  Prompt (  4678103): energy=   2.311[MeV]   trigger=0x0a000002   R= 490.16[cm]   Status=0
+                  -34.26      6.15    488.92
+  Delayed(  4678107): energy=   2.747[MeV]   trigger=0x0a000002   R= 548.14[cm]   Status=0
+                  -52.26     -5.50    545.62
+Likelihood Ratio (Measured)0 (Creiteria)0.74765
+Rp, Rd 490.157 548.145
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff =  337.450[microsec]  VertexDiff =  279.822[cm]
+  Prompt (  4717033): energy=   2.551[MeV]   trigger=0x0a000002   R= 549.26[cm]   Status=0
+                  219.62   -468.35   -184.67
+  Delayed(  4717034): energy=   2.367[MeV]   trigger=0x0b000002   R= 555.05[cm]   Status=0
+                   43.11   -553.16     15.21
+Likelihood Ratio (Measured)0 (Creiteria)0.74785
+Rp, Rd 549.261 555.046
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff = 1815.275[microsec]  VertexDiff =  147.155[cm]
+  Prompt (  5662032): energy=   1.884[MeV]   trigger=0x0a000002   R= 495.48[cm]   Status=0
+                  -39.43    -94.24    484.83
+  Delayed(  5662034): energy=   2.901[MeV]   trigger=0x0a000002   R= 561.61[cm]   Status=0
+                   42.27      2.34    560.01
+Likelihood Ratio (Measured)0 (Creiteria)0.86575
+Rp, Rd 495.476 561.608
+Muon veto 0 0 1 0 0 0 
+
+Run: 016043
+  TimeDiff =  822.425[microsec]  VertexDiff =  202.130[cm]
+  Prompt (  6288792): energy=   2.305[MeV]   trigger=0x0a000002   R= 524.09[cm]   Status=0
+                   26.46    187.38    488.73
+  Delayed(  6288793): energy=   1.961[MeV]   trigger=0x0b000002   R= 548.75[cm]   Status=0
+                   47.63     -5.11    546.66
+Likelihood Ratio (Measured)0 (Creiteria)0.74765
+Rp, Rd 524.088 548.755
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff =  752.450[microsec]  VertexDiff =   40.881[cm]
+  Prompt (  6699250): energy=   1.760[MeV]   trigger=0x0a000002   R= 590.44[cm]   Status=0
+                 -569.00    -41.90   -152.00
+  Delayed(  6699251): energy=   1.939[MeV]   trigger=0x0b000002   R= 588.95[cm]   Status=0
+                 -571.19    -71.84   -124.25
+Likelihood Ratio (Measured)0.00930642 (Creiteria)0.88615
+Rp, Rd 590.441 588.946
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff = 2449.900[microsec]  VertexDiff =   87.280[cm]
+  Prompt (  6920437): energy=   2.219[MeV]   trigger=0x0a000002   R= 569.75[cm]   Status=0
+                  -22.69     25.37    568.73
+  Delayed(  6920438): energy=   3.005[MeV]   trigger=0x0a000002   R= 510.60[cm]   Status=0
+                   24.55     63.53    506.04
+Likelihood Ratio (Measured)0 (Creiteria)0.78105
+Rp, Rd 569.748 510.603
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff = 1599.600[microsec]  VertexDiff =   47.377[cm]
+  Prompt (  7393240): energy=   2.287[MeV]   trigger=0x0a000002   R= 580.05[cm]   Status=0
+                   -0.05    -18.89    579.74
+  Delayed(  7393242): energy=   2.769[MeV]   trigger=0x0b000002   R= 570.06[cm]   Status=0
+                   36.39      9.35    568.82
+Likelihood Ratio (Measured)0 (Creiteria)0.78105
+Rp, Rd 580.048 570.06
+Muon veto 0 0 1 0 0 0 
+
+Run: 016043
+  TimeDiff =   20.250[microsec]  VertexDiff =   25.918[cm]
+  Prompt (  7517390): energy=   2.961[MeV]   trigger=0x0b000002   R= 584.29[cm]   Status=0
+                 -338.05   -108.35   -464.09
+  Delayed(  7517391): energy=   2.055[MeV]   trigger=0x0b000002   R= 589.74[cm]   Status=0
+                 -352.74   -127.69   -455.04
+Likelihood Ratio (Measured)0.813078 (Creiteria)0.31225
+Rp, Rd 584.292 589.739
+Muon veto 0 0 1 0 1 0 
+
+Run: 016043
+  TimeDiff = 1143.650[microsec]  VertexDiff =  102.250[cm]
+  Prompt (  7562421): energy=   3.037[MeV]   trigger=0x0a000002   R= 547.93[cm]   Status=0
+                  -32.98    -37.74    545.63
+  Delayed(  7562422): energy=   2.154[MeV]   trigger=0x0b000002   R= 570.28[cm]   Status=0
+                   -6.70     58.69    567.21
+Likelihood Ratio (Measured)0 (Creiteria)0.13325
+Rp, Rd 547.927 570.278
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff =  877.400[microsec]  VertexDiff =  147.241[cm]
+  Prompt (  7579623): energy=   2.500[MeV]   trigger=0x0a000102   R= 585.30[cm]   Status=0
+                 -133.70    497.96    277.01
+  Delayed(  7579624): energy=   2.696[MeV]   trigger=0x0b000102   R= 534.46[cm]   Status=0
+                  -62.63    509.56    148.58
+Likelihood Ratio (Measured)1 (Creiteria)0.73665
+Rp, Rd 585.299 534.462
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff = 2367.900[microsec]  VertexDiff =   47.923[cm]
+  Prompt (  8058217): energy=   1.615[MeV]   trigger=0x0a000002   R= 533.39[cm]   Status=0
+                  -31.65     -0.08    532.45
+  Delayed(  8058218): energy=   2.846[MeV]   trigger=0x0a000002   R= 566.99[cm]   Status=0
+                  -60.07    -23.23    563.32
+Likelihood Ratio (Measured)0 (Creiteria)0.91705
+Rp, Rd 533.39 566.99
+Muon veto 0 0 1 0 0 0 
+
+Run: 016043
+  TimeDiff =  156.300[microsec]  VertexDiff =  283.179[cm]
+  Prompt (  8543739): energy=   1.827[MeV]   trigger=0x0a000002   R= 474.47[cm]   Status=0
+                 -115.56   -459.85     17.52
+  Delayed(  8543740): energy=   2.366[MeV]   trigger=0x0b000002   R= 587.31[cm]   Status=0
+                   74.85   -557.84   -167.77
+Likelihood Ratio (Measured)0 (Creiteria)0.86575
+Rp, Rd 474.471 587.312
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff =  382.575[microsec]  VertexDiff =   44.717[cm]
+  Prompt (  9358972): energy=   2.196[MeV]   trigger=0x0a000002   R= 493.60[cm]   Status=0
+                  -11.86     29.26    492.59
+  Delayed(  9358973): energy=   2.553[MeV]   trigger=0x0b000002   R= 536.01[cm]   Status=0
+                   -0.56     23.65    535.49
+Likelihood Ratio (Measured)0.997607 (Creiteria)0.76135
+Rp, Rd 493.601 536.012
+Muon veto 0 0 0 0 0 1 
+
+Run: 016043
+  TimeDiff =  251.650[microsec]  VertexDiff =  108.141[cm]
+  Prompt ( 10976204): energy=   3.130[MeV]   trigger=0x0a000002   R= 567.72[cm]   Status=0
+                  -35.09    -19.01    566.32
+  Delayed( 10976209): energy=   2.580[MeV]   trigger=0x0b000002   R= 584.45[cm]   Status=0
+                  -86.60     75.84    573.00
+Likelihood Ratio (Measured)0.000663441 (Creiteria)0.08845
+Rp, Rd 567.724 584.449
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff =  243.350[microsec]  VertexDiff =   72.881[cm]
+  Prompt ( 11332018): energy=   1.962[MeV]   trigger=0x0a000002   R= 556.87[cm]   Status=0
+                  -20.52    -37.51    555.23
+  Delayed( 11332019): energy=   2.940[MeV]   trigger=0x0b000002   R= 577.72[cm]   Status=0
+                   24.01     15.92    577.00
+Likelihood Ratio (Measured)1 (Creiteria)0.82965
+Rp, Rd 556.874 577.719
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff =  232.175[microsec]  VertexDiff =   86.265[cm]
+  Prompt ( 12354619): energy=   1.608[MeV]   trigger=0x0a000002   R= 525.17[cm]   Status=0
+                   38.70     43.68    521.92
+  Delayed( 12354622): energy=   2.975[MeV]   trigger=0x09000002   R= 595.75[cm]   Status=0
+                   23.11      1.09    595.30
+Likelihood Ratio (Measured)1 (Creiteria)0.91705
+Rp, Rd 525.172 595.749
+Muon veto 0 0 0 0 1 0 
+
+Run: 016043
+  TimeDiff =  525.225[microsec]  VertexDiff =   63.363[cm]
+  Prompt ( 12697501): energy=   2.190[MeV]   trigger=0x0a000002   R= 559.98[cm]   Status=0
+                  335.63   -433.54   -113.91
+  Delayed( 12697502): energy=   2.263[MeV]   trigger=0x0b000002   R= 591.70[cm]   Status=0
+                  357.93   -466.69    -64.73
+Likelihood Ratio (Measured)0.241643 (Creiteria)0.76135
+Rp, Rd 559.982 591.695
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff = 1615.525[microsec]  VertexDiff =  244.110[cm]
+  Prompt ( 15073653): energy=   2.126[MeV]   trigger=0x0a000002   R= 596.16[cm]   Status=0
+                 -485.13   -342.43     52.87
+  Delayed( 15073655): energy=   2.089[MeV]   trigger=0x0b000002   R= 586.73[cm]   Status=0
+                 -494.61   -261.22   -177.14
+Likelihood Ratio (Measured)0 (Creiteria)0.76135
+Rp, Rd 596.158 586.731
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff = 1340.075[microsec]  VertexDiff =   78.289[cm]
+  Prompt ( 15735872): energy=   1.762[MeV]   trigger=0x0a000002   R= 535.98[cm]   Status=0
+                   42.16    -19.33    533.97
+  Delayed( 15735873): energy=   3.001[MeV]   trigger=0x0a000002   R= 564.24[cm]   Status=0
+                  -20.32     17.37    563.61
+Likelihood Ratio (Measured)0 (Creiteria)0.88615
+Rp, Rd 535.98 564.244
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff =  961.425[microsec]  VertexDiff =  205.952[cm]
+  Prompt ( 16341482): energy=   1.757[MeV]   trigger=0x0a000002   R= 557.35[cm]   Status=0
+                  311.14    462.04     18.63
+  Delayed( 16341483): energy=   1.993[MeV]   trigger=0x0b000002   R= 571.24[cm]   Status=0
+                  162.62    528.02    145.14
+Likelihood Ratio (Measured)0 (Creiteria)0.88615
+Rp, Rd 557.347 571.241
+Muon veto 0 0 1 0 1 0 
+
+Run: 016043
+  TimeDiff = 1680.350[microsec]  VertexDiff =   21.632[cm]
+  Prompt ( 16642191): energy=   1.560[MeV]   trigger=0x0b000002   R= 551.83[cm]   Status=0
+                   30.62      4.43    550.96
+  Delayed( 16642193): energy=   2.499[MeV]   trigger=0x0a000002   R= 570.79[cm]   Status=0
+                   26.51     -4.67    570.15
+Likelihood Ratio (Measured)0 (Creiteria)0.93785
+Rp, Rd 551.828 570.785
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff =  777.375[microsec]  VertexDiff =  268.430[cm]
+  Prompt ( 16988680): energy=   2.272[MeV]   trigger=0x0a000002   R= 575.08[cm]   Status=0
+                  -57.48    -43.86    570.52
+  Delayed( 16988681): energy=   2.438[MeV]   trigger=0x0b000002   R= 597.94[cm]   Status=0
+                    6.83    216.42    557.36
+Likelihood Ratio (Measured)0 (Creiteria)0.78105
+Rp, Rd 575.083 597.942
+Muon veto 0 0 1 0 0 0 
+
+Run: 016043
+  TimeDiff = 1410.500[microsec]  VertexDiff =  298.364[cm]
+  Prompt ( 17549195): energy=   2.159[MeV]   trigger=0x0a000002   R= 534.39[cm]   Status=0
+                 -108.79   -375.65    364.17
+  Delayed( 17549196): energy=   2.366[MeV]   trigger=0x0a000002   R= 597.56[cm]   Status=0
+                 -233.38   -158.68    526.72
+Likelihood Ratio (Measured)0 (Creiteria)0.76135
+Rp, Rd 534.386 597.561
+Muon veto 0 0 0 0 0 0 
+
+Run: 016043
+  TimeDiff =   37.300[microsec]  VertexDiff =   86.244[cm]
+  Prompt ( 18706001): energy=   1.542[MeV]   trigger=0x0a000002   R= 422.77[cm]   Status=0
+                  -67.10   -417.38      5.44
+  Delayed( 18706002): energy=   2.260[MeV]   trigger=0x0b000002   R= 357.56[cm]   Status=0
+                  -41.13   -351.05     54.06
+Likelihood Ratio (Measured)0.999979 (Creiteria)0.93785
+Rp, Rd 422.774 357.562
+Muon veto 0 0 2 0 1 0 
+
+Run: 016043
+  TimeDiff =  634.900[microsec]  VertexDiff =  117.125[cm]
+  Prompt ( 19957502): energy=   2.208[MeV]   trigger=0x0a000002   R= 559.75[cm]   Status=0
+                  -44.92    -89.10    550.78
+  Delayed( 19957507): energy=   2.472[MeV]   trigger=0x0b000002   R= 571.69[cm]   Status=0
+                    7.78     13.43    571.48
+Likelihood Ratio (Measured)0.00279398 (Creiteria)0.78105
+Rp, Rd 559.746 571.691
+Muon veto 0 0 0 0 0 0 
+

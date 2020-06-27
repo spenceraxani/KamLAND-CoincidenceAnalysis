@@ -1,0 +1,159 @@
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-01
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-02
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-03
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-04
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-05
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-06
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-07
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-08
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-09
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-10
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-11
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-12
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-13
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-14
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-15
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-16
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-17
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-18
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-19
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-20
+
+
+
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110426-01
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110426-02
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110426-03
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110426-04
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110426-05
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110426-06
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110426-07
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110426-08
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110426-09
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110426-10
+
+
+
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-01
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-02
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-03
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-04
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-05
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-06
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-07
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-08
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-09
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-10
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-11
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-12
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-13
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-14
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-15
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-16
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-17
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-18
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-19
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110423-20
+
+
+
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-01
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-02
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-03
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-04
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-05
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-06
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-07
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-08
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-09
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-10
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-11
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-12
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-13
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-14
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-15
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-16
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-17
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-18
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-19
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110920-20
+
+
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-01
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-02
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-03
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-04
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-05
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-06
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-07
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-08
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-09
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-10
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-11
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-12
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-13
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-14
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-15
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-16
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-17
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-18
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-19
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-20
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-21
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-22
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-23
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-24
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-25
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-26
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-27
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-28
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-29
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-30
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-31
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-32
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-33
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-34
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-35
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-36
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-37
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-38
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-39
+bsub -q kamland -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-110922-40
+
+
+
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-01
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-02
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-03
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-04
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-05
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-06
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-07
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-08
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-09
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-10
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-11
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-12
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-13
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-14
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-15
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-16
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-17
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-18
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-19
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-121218-20
+
+
+
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-130209-01
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-130209-02
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-130209-03
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-130209-04
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-130209-05
+
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-130209-06
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-130209-07
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-130209-08
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-130209-09
+bsub -q kamland_s -o /dev/null  ./example-DelayedCoincidence-and-Muon-for-8He9Li.sh ./log/example-DelayedCoincidence-and-Muon-for-8He9Li.log-130209-10
+

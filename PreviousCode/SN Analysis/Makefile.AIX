@@ -1,0 +1,6 @@
+# Time-stamp: <2002-07-27 21:13:37 tajima>
+
+CXX		= xlC
+CXXFLAGS        = -qarch=pwr3 -qmaxmem=-1 -q${BITMODE}
+LDFLAGS       	= -Wl,-bhalt:5
+ARFLAGS		= -X${BITMODE}

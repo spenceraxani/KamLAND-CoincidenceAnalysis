@@ -1,20 +1,20 @@
 
-
 import numpy as np
 import os
 from scipy.integrate import quad
 import scipy
 import matplotlib.pyplot as plt
+
 class DataPaths:
     def __init__(self, location):
-        self.location = location
-        self.xsLocation = location+'/Resources/XS/'
-        self.pdfLocation = os.getcwd()+'/Figures/'
+        self.location           = location
+        self.resourcesLocation  = location+'/Resources/'
+        self.pdfLocation        = location+'/Figures/'
         return
     
     def RealoadPaths(self,location):
         self.location = location
-        self.xsLocation = location+'/Resources/XS/'
+        self.xsLocation = location+'/Resources/'
         return
     
 
@@ -25,24 +25,24 @@ class Constants:
         self.OmegaMatter = 0.315       # Omega matter density 
         self.c = 299792458             # Speed of light
         self.NTargetProtons = 5.98e31  # Number of target protons. Update from Joe.
-        self.neutrinoMass = 1.0        # Average neutrino mass. 
+        self.neutrinoMass = 0.087        # Average neutrino mass. ?? Should it be the heaviest? 1.0, 0.087
         self.NeutrinoEmissionRange = [-500,500] # Range of allowed neutrino emission time
+        self.EventTimeSpan = 0
         self.maxNeutrinoEnergy_MeV = 100
         self.minNeutrinoEnergy_MeV = 1.8
         
         self.LiveTime = float(3600*24*365*0.9) # This is the livetime of the data.
-        self.RealTime = float(3600*24*365)     # The realtime of the data. 
-        self.LiveTimeEfficiency = self.LiveTime/self.RealTime 
-        self.NeutrinoCenterEnergies = np.linspace(1.8,100,983)
-        self.CrossSection        = np.asarray(self.NeutrinoCenterEnergies**2/11.)*1E-42 # FIX!!
+        #self.RealTime = float(3600*24*365)     # The realtime of the data. 
+        #self.LiveTimeEfficiency = self.LiveTime/self.RealTime 
+        #self.NeutrinoCenterEnergies = np.linspace(1.8,100,983)
+        self.NeutrinoCenterEnergies = np.linspace(0,100,1001)
         
-        self.DetectionEfficiency = np.asarray([(0.5*i)/(100)+0.5 for i in self.NeutrinoCenterEnergies])
-        em2_spectrum = np.asarray([i**-2 for i in self.NeutrinoCenterEnergies])
-        em2_spectrum_pdf = em2_spectrum/sum(em2_spectrum)
-        flat_spectrum = np.asarray([1. for i in self.NeutrinoCenterEnergies])
-        flat_spectrum_pdf = flat_spectrum/sum(flat_spectrum)
-        self.NeutrinoSpectrumPDF = flat_spectrum_pdf
-        
+        #self.DetectionEfficiency = np.asarray([(0.5*i)/(100)+0.5 for i in self.NeutrinoCenterEnergies])
+        #em2_spectrum = np.asarray([i**-2 for i in self.NeutrinoCenterEnergies])
+        #em2_spectrum_pdf = em2_spectrum/sum(em2_spectrum)
+        #flat_spectrum = np.asarray([1. for i in self.NeutrinoCenterEnergies])
+        #flat_spectrum_pdf = flat_spectrum/sum(flat_spectrum)
+
         return
     
     def setSeed(self,seed):
@@ -57,20 +57,6 @@ class Constants:
         self.CrossSection = cross_section
         return 
 
-    def setDetectionEfficiency(self, detection_efficiency):
-        if len(detection_efficiency)!= len(self.NeutrinoCenterEnergies):
-            print('Error')
-        else:
-            self.DetectionEfficiency = detection_efficiency
-        return 
-
-    def setNeutrinoSpectrumPDF(self, neutrino_energy_spectrum):
-        if len(neutrino_energy_spectrum)!= len(self.NeutrinoCenterEnergies):
-            print('Error')
-        else:
-            nu_e_spectrum = nu_e_spectrum/sum(nu_e_spectrum)
-            self.NeutrinoSpectrumPDF = nu_e_spectrum
-        return 
 
 class FitParameters:
     def __init__(self):
@@ -89,32 +75,122 @@ class GravitationalWaveClass:
     
 class NeutrinoClass:
     def __init__(self,NeutrinoArray):
-        mask = np.asarray(NeutrinoArray[:,1]>1.8)
-        for i in range(len(mask)):
-            if not mask[i]:
-                print('Neutrino with energy less than 0.9MeV found. Removed. Energy: ')
-                print(NeutrinoArray[:,1][i],'MeV')
-                
-        self.Time         = np.asarray(NeutrinoArray[:,0][mask]).astype(float)
-        self.Energy       = np.asarray(NeutrinoArray[:,1][mask]).astype(float)
-        self.Energy_m     = np.asarray(NeutrinoArray[:,2][mask]).astype(float)
-        self.Energy_p     = np.asarray(NeutrinoArray[:,3][mask]).astype(float)
+        self.Time         = np.asarray(NeutrinoArray[:,0]).astype(float) 
+        self.Energy       = np.asarray(NeutrinoArray[:,1]).astype(float)
+        self.Energy_m     = np.asarray(NeutrinoArray[:,2]).astype(float)
+        self.Energy_p     = np.asarray(NeutrinoArray[:,3]).astype(float)
         return
     
 class KLZFit:
     def __init__(self, DataPaths, Constants,FitParameters):
-        self.DataPaths = DataPaths
-        self.Constants = Constants
-        self.FitParameters = FitParameters
-        self.explainNeutrinos = 'Each row is a neutirno event. Col: [time (UTC),e-,e,e+]'
-        self.Neutrinos = 'None'
-        self.explainGravitationalWaves = 'Each row is a neutirno event. Col: [name, time (UTC),e-,e,e+]'
+        self.DataPaths        = DataPaths
+        self.Constants        = Constants
+        self.FitParameters    = FitParameters
+        self.Neutrinos        = 'None'
         self.GravitationalWaves = 'None'
+    
+    def setDetectionEfficiency(self, detection_efficiency_file):
+        # We want detection efficiency as a function of true neutrino energy
+        with open(detection_efficiency_file) as f:
+            content = f.readlines()
+        delim = ' '
+        for line in content:
+            if ',' in line:
+                delim =','
+                
+        # Upload detection efficiency as a function of measured neutrino energy , from thesis.   
+        energy, efficiency = np.loadtxt(detection_efficiency_file,unpack=True,delimiter=delim) 
         
-    def setNeutrinos(self,uploadNeutrinos):
-        NeutrinoEvents            = NeutrinoClass(uploadNeutrinos)
-        self.Neutrinos            = NeutrinoEvents
+        # Convert measured energy to true energy:
+        energy = energy + 0.78
+        
+        # linear interp to the energy values that we are using in the analysis
+        efficiency = np.interp(self.Constants.NeutrinoCenterEnergies, energy, efficiency)
+        self.DetectionEfficiency = efficiency
+        return 
+   
+
+    def setNeutrinoEnergyPDF(self, neutrino_energy_file):
+        # This function takes in the measured energy distribution from a apaper or thesis, 
+        # and converts it to a true neutrino energy PDF. You need to also have the 
+        # detection efficiency of the measured energy distribution.
+        
+        # neutrino_energy_file should be 2d array, [energy[MeV], number of neutrinos]
+        # The file should be the measured energy distribution. Check to see if the file has a comma in it.
+        with open(neutrino_energy_file) as f:
+              content = f.readlines()
+        delimiter = ' '
+        for line in content:
+            if ',' in line:
+                delimiter =','
+        
+        # Now, convert the Measured energy distribution to a true neutrino energy distribution.
+        
+        # Upload the measured energy distribution from a thesis.
+        energy, relative_rate = np.loadtxt(neutrino_energy_file, unpack = True, delimiter = delimiter)
+        
+        # Convert KamLAND measured energy to true energy, just add 0.78MeV.
+        true_energy = energy + 0.78 # See https://arxiv.org/pdf/1503.02137.pdf
+        
+        # make sure that the true energy pdf is 0 below 1.8MeV
+        for i in range(len(true_energy)):
+            if true_energy[i] <1.8:
+                relative_rate[i] = 0
+        
+        # Interpolate so we have data at our desired energy values, NeutrinoCenterEnergies:
+        relative_rate               = np.interp(self.Constants.NeutrinoCenterEnergies, true_energy, relative_rate)        
+        
+        
+        
+        # Account for the detection efficiency:
+        relative_rate = relative_rate/self.DetectionEfficiency
+        
+        # Normalize so that it is a PDF
+        self.NeutrinoEnergyPDF        = relative_rate/sum(relative_rate)
+        
+        # Get the true average energy, for fun
+        self.NeutrinoEnergyAverage    = sum(self.NeutrinoEnergyPDF *
+                                            self.Constants.NeutrinoCenterEnergies)
+        
+        print('Average True Neutrino Energy in sample: '+str(np.round(self.NeutrinoEnergyAverage,2))+'MeV')
         return
+    
+    
+    def write_to_file(self,array,outfile_name,delimiter = ','):
+        f = open(outfile_name, "w")
+        for i in range(len(array)):
+            outstring = ''
+            for j in range(len(array[i])):
+                outstring+= str(array[i][j])
+                if j < len(array[i])-1:
+                    outstring+=', '
+            f.write(outstring+'\n')
+        f.close()
+        return
+    
+    
+    def setNeutrinos(self,realization_file):
+        # set the neutrinos for the analysis from a file containing the neutrino information.
+        # File should be array of Time, Measured energy (MeV), Energy uncertainty - (MeV), Energy uncertainty + (MeV), 
+        with open(realization_file) as f:
+              content = f.readlines()
+        delim = ' '
+        for line in content:
+            if ',' in line:
+                delim =','
+                
+        data = np.loadtxt(realization_file, unpack=True, delimiter=delim)
+        data = np.transpose(data)
+        neutrino_array = []
+        for i in range(len(data)):
+            neutrino_array.append(np.ndarray.tolist(data[i]))
+            
+        neutrino_array            = np.asarray(neutrino_array) 
+        NeutrinoEvents            = NeutrinoClass(neutrino_array)
+        self.Neutrinos            = NeutrinoEvents
+        self.NeutrinoColors       = np.asarray(['k']*len(neutrino_array))
+        return
+    
     
     def getNeutrinos(self):
         return self.Neutrinos
@@ -132,7 +208,7 @@ class KLZFit:
             mn = self.Constants.neutrinoMass
             H0 = self.Constants.H0 * 1000/(3.08568e22)
             Ol = self.Constants.OmegaLambda
-            Om =  self.Constants.OmegaMatter
+            Om = self.Constants.OmegaMatter
             c = self.Constants.c
             v = H0 *distance_Mpc * 3.08568e22; 
             z = v/c
@@ -145,61 +221,82 @@ class KLZFit:
         GWNeutrinoTOF = []
         for i in range(len(self.GravitationalWaves.Time)):
             GWTime    = self.GravitationalWaves.Time[i]
+            GWDist    = self.GravitationalWaves.Distance[i]
+            '''
             if FitParameters.GWDistance < 0:
-                GWDist    = self.GravitationalWaves.Distance[i] + FitParameters.GWDistance * self.GravitationalWaves.Distance_m[i]
+                GWDist    = self.GravitationalWaves.Distance[i] +\
+                            FitParameters.GWDistance * self.GravitationalWaves.Distance_m[i]
             else:
-                GWDist    = self.GravitationalWaves.Distance[i] + FitParameters.GWDistance * self.GravitationalWaves.Distance_p[i]
-                
+                GWDist    = self.GravitationalWaves.Distance[i] +\
+                            FitParameters.GWDistance * self.GravitationalWaves.Distance_p[i]
+            '''
+            max_tof   = neutrinoTimeOfFlight(GWDist, 1.8)
             neutrino_energies = []
             for j in range(len(self.Neutrinos.Time)):
-                #print(self.Neutrinos.Time[j])
                 NTime = self.Neutrinos.Time[j]
+                neutrino_energies.append(self.Neutrinos.Energy[j])
+                '''
                 if FitParameters.NeutrinoEnergy < 0:
-                    neutrino_energies.append(self.Neutrinos.Energy[j] + self.FitParameters.NeutrinoEnergy * self.Neutrinos.Energy_m[j])
+                    neutrino_energies.append(self.Neutrinos.Energy[j] +\
+                                             self.FitParameters.NeutrinoEnergy*self.Neutrinos.Energy_m[j])
                 else:
-                    neutrino_energies.append(self.Neutrinos.Energy[j] + self.FitParameters.NeutrinoEnergy * self.Neutrinos.Energy_p[j])
-
+                    neutrino_energies.append(self.Neutrinos.Energy[j] +\
+                                             self.FitParameters.NeutrinoEnergy*self.Neutrinos.Energy_p[j])
+                '''
             TOF_neutrinos   = np.asarray([neutrinoTimeOfFlight(GWDist, j) for j in neutrino_energies])
             GWNeutrinoTOF.append(TOF_neutrinos)
         self.GravitationalWaves_TimeRange    = np.asarray(GWNeutrinoTOF)
         return 
     
     
-    def setNeutrinoEnergyPDF(self, NeutrinoEnergyPDF):
-        if len(NeutrinoEnergyPDF) != len(self.Constants.NeutrinoCenterEnergies):
-            print('You need to generate the pdf at the neutrino energies self.Constants.NeutrinoCenterEnergies.')
-        NeutrinoEnergyPDF             = NeutrinoEnergyPDF/sum(NeutrinoEnergyPDF) # Normalize to make it a pdf.
-        self.NeutrinoEnergyPDF        = np.asarray(NeutrinoEnergyPDF)
-        self.NeutrinoEnergyAverage    = sum(self.NeutrinoEnergyPDF * self.Constants.NeutrinoCenterEnergies)
-        print('Average Neutrino Energy in sample: '+str(np.round(self.NeutrinoEnergyAverage,2))+'MeV')
-        return 
-    
-
-    
     def getNeutrinoRealization(self,Rate):
+        # This function returns a list of fake neutrinos.
+        # Each element in the list is one neutrino.
+        # Each neutrino is defined by its interaction time, and measured Energy with uncertainty.
+        
+        # This makes some fake neutrinos from the Neutrino Energy PDF.
         # Rate = neutrino rate that you want.
         try:
             NeutrinoEnergyPDF = self.NeutrinoEnergyPDF
         except:
             print('You need to define the self.NeutrinoEnergyPDF before getting a realization.')
         
-        # Generate neutrinos from the NeutrinoEnergyPDF
+        # Randomly Generate neutrinos from the NeutrinoEnergyPDF
         cdf             = np.cumsum(NeutrinoEnergyPDF)
         cdf             = cdf / cdf[-1]
         random_values   = np.random.rand(int(self.Constants.LiveTime*Rate)) 
         value_bins      = np.searchsorted(cdf, random_values) 
-        random_neutrino_energies = self.Constants.NeutrinoCenterEnergies[value_bins]
-        NeutrinoEvents = []
-        for i in range(len(random_neutrino_energies)):
-            # Get a random neutrino energy, and smear it by some amount. 
-            ee = np.random.normal(random_neutrino_energies[i],random_neutrino_energies[i]*0.3)
-            if ee > 1.8:
-                # Assign a random time, and give uncertainty on the energy.
-                # Spencer: update the energy uncertainty later.
-                NeutrinoEvents.append([np.random.uniform(low=0, high=self.Constants.LiveTime, size=(1,))[0],ee,-0.1*ee,0.1*ee])
+        random_true_neutrino_energies = self.Constants.NeutrinoCenterEnergies[value_bins]
+        NeutrinoEvents  = []
         
-        self.NeutrinoRateExpectation = len(random_neutrino_energies)/self.Constants.LiveTime
-        self.NeutrinoRateExpectationUncertainty = np.sqrt(len(random_neutrino_energies))/self.Constants.LiveTime
+        # Loop through the number of desired neutrinos
+        for i in range(len(random_true_neutrino_energies)):
+            # The true energy has to be above 1.8MeV to interact through IBD:
+            if random_true_neutrino_energies[i] > 1.8:
+                # Convert from true neutrino energy to a measured (prompt) energy
+                prompt_energy = random_true_neutrino_energies[i] - 0.78
+                
+                # Energy uncertainty for KamLAND is 6.4%/sqrt(MeV). 
+                energy_uncertainty_percentage = 0.064/np.sqrt(prompt_energy) # This is a percentage
+                
+                # Smear the measured energy by the energy uncertainty
+                smeared_energy = np.random.normal(prompt_energy, prompt_energy*energy_uncertainty_percentage)
+                
+                # Calcualte the +/- uncertainties in MeV units for the energy
+                smeared_energy_uncertainty_low = -smeared_energy*energy_uncertainty_percentage
+                smeared_energy_uncertainty_high = smeared_energy*energy_uncertainty_percentage
+
+                # Assign the neutrion a random interaction time within the livetime of the analysis:
+                Neutrino_interaction_time = np.random.uniform(low=0,high=self.Constants.LiveTime,size=(1,))[0]
+                
+                # Make a list of our neutrinos.
+                NeutrinoEvents.append([Neutrino_interaction_time, # When did it interact?
+                                       smeared_energy, # What energy did KamLAND measure
+                                       smeared_energy_uncertainty_low, # What is the assigned uncertainty
+                                       smeared_energy_uncertainty_high]) # What is the assigned uncertainty
+
+        self.NeutrinoRateExpectation = len(random_true_neutrino_energies)/self.Constants.LiveTime
+        self.NeutrinoRateExpectationUncertainty = np.sqrt(len(random_true_neutrino_energies))/self.Constants.LiveTime
         return np.asarray(NeutrinoEvents) 
     
 
@@ -256,30 +353,39 @@ class KLZFit:
                 return const * 1./((1+x)**2 * np.sqrt(Ol+Om*(1+x)**3))
             return quad(func, 0., z)[0]
 
-        
         NExp_accidental_events= 0
         for i in range(len(self.GravitationalWaves.Time)):
             GW_distance = self.GravitationalWaves.Distance[i]
-            average_time_window = (self.Constants.NeutrinoEmissionRange[1]-self.Constants.NeutrinoEmissionRange[0])+neutrinoTimeOfFlight(GW_distance,self.NeutrinoEnergyAverage)
+            average_time_window = self.Constants.NeutrinoEmissionRange[1]-\
+                                    self.Constants.NeutrinoEmissionRange[0]+\
+                                    neutrinoTimeOfFlight(GW_distance,self.NeutrinoEnergyAverage)+\
+                                    self.Constants.EventTimeSpan
+                        
             GW_time = self.GravitationalWaves.Time[i]
+            
             if plot_GW:
                 plt.vlines(GW_time, ymin = 0,ymax = 100,linestyles='--')
                 plt.text(GW_time + self.Constants.LiveTime/100.,0.98*ymax,
-                         str(int(self.GravitationalWaves.Distance[i]))+'Mpc',rotation = 90,va = 'top',size=8)
+                         str(int(self.GravitationalWaves.Distance[i]))+'Mpc',
+                         rotation = 90,va = 'top',size=8)
 
-                plt.axvspan( self.Constants.NeutrinoEmissionRange[0]+GW_time,
-                            self.Constants.NeutrinoEmissionRange[1]+GW_time, facecolor='k',alpha=0.2)
+                plt.axvspan(self.Constants.NeutrinoEmissionRange[0]+\
+                            GW_time,
+                            self.Constants.NeutrinoEmissionRange[1]+\
+                            GW_time+\
+                            self.Constants.EventTimeSpan, 
+                            facecolor='k',alpha=0.2)
+            
             NExp_accidental_events += 2 * self.NeutrinoRateExpectation * average_time_window 
         
         neutrino_colors = []
         
-
         for j in range(len(self.Neutrinos.Time)):
                 x  = [self.Neutrinos.Time[j]]
                 y  = [self.Neutrinos.Energy[j]]
                 ym = [-self.Neutrinos.Energy_m[j]]
                 yp = [self.Neutrinos.Energy_p[j]]
-                p = plt.errorbar(x, y,yerr=[ym,yp], xerr = [0], fmt='o',ms=3, mew=1)
+                p = plt.errorbar(x, y,yerr=[ym,yp], xerr = [0], fmt='o',ms=1, mew=1)
                 neutrino_colors.append(p[0].get_color())
         
         plt.text(xmax*0.98,ymax*1.05, 'Total Accidental Exp. = '+str(np.round(NExp_accidental_events,1)) +' Counts',
@@ -298,6 +404,70 @@ class KLZFit:
             
         return 
     
+    def plotMaxRangeEachEvents(self,plot_GW):
+        # The absolute maximum time window, assuming lowest energy (1.8MeV), and highest mass (1eV).
+        import matplotlib.pyplot as plt
+
+        def neutrinoTimeOfFlight(distance_Mpc,Energy_MeV):
+            mn = 1.
+            H0 = self.Constants.H0 * 1000/(3.08568e22)
+            Ol = self.Constants.OmegaLambda
+            Om =  self.Constants.OmegaMatter
+            c = self.Constants.c
+            v = H0 *distance_Mpc * 3.08568e22; 
+            z = v/c
+            E = Energy_MeV*1e6
+            const = mn**2/(2*H0*E**2)
+            def func(x):
+                return const * 1./((1+x)**2 * np.sqrt(Ol+Om*(1+x)**3))
+            return quad(func, 0., z)[0]
+
+        for i in range(len(self.GravitationalWaves.Time)):
+            fig, ax1 = plt.subplots()
+            GW_distance = self.GravitationalWaves.Distance[i]
+            GW_time = self.GravitationalWaves.Time[i]
+            ymax = max(self.Neutrinos.Energy)*1.2
+            
+            if plot_GW:
+                plt.vlines(0, ymin = 0,ymax = 100,linestyles='--')
+                plt.text(0,0.98*ymax,
+                         str(int(self.GravitationalWaves.Distance[i]))+'Mpc',rotation = 90,va = 'top',size=8)
+
+                plt.axvspan(self.Constants.NeutrinoEmissionRange[0],
+                            self.Constants.NeutrinoEmissionRange[1]+
+                            neutrinoTimeOfFlight(GW_distance,1.8)+
+                            self.Constants.EventTimeSpan, 
+                            facecolor='k',alpha=0.2)
+            
+            for j in range(len(self.Neutrinos.Time)):
+                    x  = [self.Neutrinos.Time[j]-GW_time]
+                    y  = [self.Neutrinos.Energy[j]]
+                    ym = [-self.Neutrinos.Energy_m[j]]
+                    yp = [self.Neutrinos.Energy_p[j]]
+                    p = plt.errorbar(x, y,yerr=[ym,yp], xerr = [0], fmt='o', color = self.NeutrinoColors[j], ms=3, mew=1)
+
+            tof_1p8MeV = neutrinoTimeOfFlight(GW_distance,1.8)
+            plt.axis([(-0.1*tof_1p8MeV) + self.Constants.NeutrinoEmissionRange[0],
+                      self.Constants.NeutrinoEmissionRange[1]+1.1*neutrinoTimeOfFlight(GW_distance,1.8),
+                      0,ymax])
+            
+            plt.vlines(self.Constants.NeutrinoEmissionRange[0], 
+                       ymin = 0,ymax = 100,linestyles='-')
+            plt.vlines(self.Constants.NeutrinoEmissionRange[1]+
+                       neutrinoTimeOfFlight(GW_distance,1.8)+
+                       self.Constants.EventTimeSpan, 
+                       ymin = 0,ymax = 100,linestyles='-')
+            
+            plt.xlabel('Time [s]')
+            plt.ylabel('Energy [MeV]')
+            plt.savefig(self.DataPaths.pdfLocation+'/plotEachEvents'+str(i)+'.pdf', format='pdf', dpi=200, bbox_inches='tight')
+            print(self.DataPaths.pdfLocation+'/plotAllEvents'+str(i)+'.pdf')
+        
+            plt.show()
+            
+        return 
+    
+    
     
     def evalLLH(self):
         
@@ -311,25 +481,26 @@ class KLZFit:
             NObs = 0
             for j in range(len(self.Neutrinos.Time)): # Loop through Neutrinos
                 interesting_event = False
-                x  = [self.Neutrinos.Time[j]-t0] # Set the Absolute time of the neutrino relative to the GW.
-                c  = self.NeutrinoColors[j]
-                acceptance_time_range = self.GravitationalWaves_TimeRange[i][j] +self.Constants.NeutrinoEmissionRange[1]
+                tn  = [self.Neutrinos.Time[j]-t0] # Set the Absolute time of the neutrino relative to the GW.
+                c   = self.NeutrinoColors[j] # Just color of the neutrino
                 
-                if x[0] > self.Constants.NeutrinoEmissionRange[0] and  x[0] < acceptance_time_range:
+                window_start = self.Constants.NeutrinoEmissionRange[0] # [0] is the curently -500s
+                window_end   = self.GravitationalWaves_TimeRange[i][j]+\
+                               self.Constants.NeutrinoEmissionRange[1]+\
+                               self.Constants.EventTimeSpan
+                time_window  = window_end - window_start
+                
+                if tn[0] > window_start and  tn[0] < window_end:
                     # Found a neutrino in the time range.
                     interesting_event = True
                     NObs+=1
+                    
                     # Plot it
                     fig, ax1 = plt.subplots()
-                    
-                    xmin = self.Constants.NeutrinoEmissionRange[0]-200 # axis
-                    xmax = acceptance_time_range+1000 # axis
+                    xmin = -0.1 * window_end + window_start # axis
+                    xmax = 1.1 * window_end  # +1000 # axis
                     ax1.axis([xmin,xmax,0,20]) # axis
-                                        
-                    window_start = self.Constants.NeutrinoEmissionRange[0] # [0] is the curently -500s
-                    window_end   = acceptance_time_range
-                    time_window = acceptance_time_range - window_start
-                    
+
                     if axis2:
                         ax2 = ax1.twinx()
                         ymax = 1000
@@ -362,9 +533,9 @@ class KLZFit:
                     y  = [self.Neutrinos.Energy[j]] # Energy of the neutrino
                     ym = [-self.Neutrinos.Energy_m[j]] # With uncertainties
                     yp = [self.Neutrinos.Energy_p[j]]
-                    p = ax1.errorbar(x, y,yerr=[ym,yp], xerr = [0], fmt='o',ms=3, mew=1,color = c)
+                    p = ax1.errorbar(tn, y,yerr=[ym,yp], xerr = [0], fmt='o',ms=3, mew=1,color = c)
                     
-                    ax1.text(x[0],y[0]+0.1,
+                    ax1.text(tn[0],y[0]+0.1,
                          'E = '+str(np.round(y[0],1))+'MeV',rotation = 0,va = 'bottom',ha='left',size=10,color = c)
                     
                     ax1.vlines(window_end, ymin = 0,ymax = 100,linestyles='-',color = c)
@@ -376,7 +547,7 @@ class KLZFit:
                     
                 if interesting_event:
                     plt.title(self.GravitationalWaves.Name[i]+' ('+str(int(self.GravitationalWaves.Distance[i]))+'Mpc)')
-                    ax1.vlines(0,ymin = 0,ymax = 100,linestyles='-',color = 'k',alpha = 0.2)
+                    ax1.vlines(0,ymin = 0,ymax = 100,linestyles='--',color = 'k',alpha = 1)
                     #ax1.vlines(self.Constants.NeutrinoEmissionRange[1],ymin = 0,ymax = 100,linestyles=':',color = c,alpha = 0.3)
                     ax1.set_ylabel('Energy [MeV]')
                     plt.xlabel('Time [s]')
@@ -388,6 +559,43 @@ class KLZFit:
         return 
     
     
+                
+    def calcFluence(self,plot=True):
+        E      = self.Constants.NeutrinoCenterEnergies
+        NT     = self.Constants.NTargetProtons
+        xs     = self.Constants.CrossSection
+        Deff   = self.DetectionEfficiency
+        Lambda = self.NeutrinoEnergyPDF
+
+        if plot:
+            fig, ax1 = plt.subplots()
+
+        for i in range(len(self.GravitationalWaves.Name)):
+            lower_CL = self.FCLowerLimits[i]
+            upper_CL = self.FCUpperLimits[i]
+            fluence_lower = []
+            fluence_upper = []
+            for j in range(len(E)):
+                fluence_lower.append(lower_CL/(NT*xs[j]*Deff[j]))#*Lambda[j]))
+                fluence_upper.append(upper_CL/(NT*xs[j]*Deff[j]))#*Lambda[j]))
+
+            if plot:
+                plt.plot(E,fluence_upper,label = self.GravitationalWaves.Name[i])
+                #plt.fill_between(E,fluence_lower,fluence_upper)
+            ax1.set_yscale("log")
+            plt.xlabel('Energy [MeV]')
+            plt.ylabel('Fluence [cm-2]')
+            plt.legend()
+            lower_limit = []
+            
+        plt.axvline(x = 1.8,linestyle=':',color = 'k')
+        
+        plt.savefig(self.DataPaths.pdfLocation+'calcFluence.pdf', format='pdf', dpi=200, bbox_inches='tight')
+        print(self.DataPaths.pdfLocation+'calcFluence.pdf')
+        plt.show()
+        return
+            
+        
     def calcFeldmanCousins(self,plot=True,confidenceLevel = 0.9):
         lower_limit = []
         upper_limit = []
@@ -399,7 +607,10 @@ class KLZFit:
             for j in range(len(self.Neutrinos.Time)): # Loop through the neutrinos.
                 x  = [self.Neutrinos.Time[j]-t0]
                 c  = self.NeutrinoColors[j]
-                time_window = [self.Constants.NeutrinoEmissionRange[0], self.GravitationalWaves_TimeRange[i][j] +self.Constants.NeutrinoEmissionRange[1]] # The time window [seconds prior, seconds after]
+                time_window = [self.Constants.NeutrinoEmissionRange[0], 
+                               self.GravitationalWaves_TimeRange[i][j]+\
+                               self.Constants.EventTimeSpan+\
+                               self.Constants.NeutrinoEmissionRange[1]] # The time window [seconds prior, seconds after]
                 time_window_range = time_window[1]-time_window[0]     # Total time window
                 if x[0] > time_window[0] and  x[0] < time_window[-1]: # If you see a neutrion in the time window count it.
                     NObs+=1
@@ -523,62 +734,88 @@ class KLZFit:
         plt.show()
         return
 
-
-    def plotNeutrinoEnergyPDF(self,log):
+    def plotNeutrinoEnergyPDF(self,log,xmin = 0,xmax = 20,plot_realization=True, prompt= True):
         fig, ax1 = plt.subplots()
-        plt.plot(self.Constants.NeutrinoCenterEnergies,  self.NeutrinoEnergyPDF,label='Neutrino Energy PDF')
-        plt.ylabel('Arbitrary')
-        plt.xlabel('Neutrino Energy [MeV]')
-        #plt.text(20*0.98,100000*3, r'Time of Flight (M$_N$ = '+str(self.Constants.neutrinoMass)+' eV)',
-        #         rotation = 0,va = 'top',ha='right',size=10,color = 'k')
+        # If prompt == True, then plot the measured energy distribution, with the measured energy PDF.
+        if prompt: 
+            plt.plot(self.Constants.NeutrinoCenterEnergies-0.78,self.NeutrinoEnergyPDF, label='Prompt Neutrino Energy PDF')
+            plt.xlabel('Prompt Neutrino Energy [MeV]')
+            # if plot_realization==True, plot the fake neutrinos as well as a histogram.
+            if plot_realization:
+                # The neutrino events energy is a prompt energy
+                print(min(self.Neutrinos.Energy))
+                
+                counts = plt.hist(self.Neutrinos.Energy, bins = self.Constants.NeutrinoCenterEnergies,
+                         weights = np.ones(len(self.Neutrinos.Energy))/len(self.Neutrinos.Energy),
+                         label   = 'Realization (N='+str(len(self.Neutrinos.Energy))+')')
+
+        else:
+            # if not prompt, plot the true energy
+            plt.plot(self.Constants.NeutrinoCenterEnergies,self.NeutrinoEnergyPDF, label='Neutrino Energy PDF')
+            plt.xlabel('True Neutrino Energy [MeV]')
+            plt.axvline(x = 1.8,linestyle=':',color = 'k')
+            if plot_realization:
+                counts = plt.hist(self.Neutrinos.Energy+0.78, bins = self.Constants.NeutrinoCenterEnergies,
+                         weights = np.ones(len(self.Neutrinos.Energy))/len(self.Neutrinos.Energy),
+                         label   = 'Realization (N='+str(len(self.Neutrinos.Energy))+')')
             
-        #plt.plot([0,100],[500,500],'k')
+        plt.ylabel('Arbitrary')
+
+        plt.axis([xmin,xmax,0., 1.2*max(self.NeutrinoEnergyPDF)])
         plt.legend()
-        
-        plt.axis([0,100,0., max(self.NeutrinoEnergyPDF)])
-        if log==True:
-            ax1.set_yscale('log')
-            plt.axis([0,100,0.0000001, max(self.NeutrinoEnergyPDF)])
         plt.savefig(self.DataPaths.pdfLocation+'plotNeutrinoPDF.pdf', format='pdf', dpi=200, bbox_inches='tight')
         print(self.DataPaths.pdfLocation+'plotNeutrinoPDF.pdf')
         plt.show()
         return
 
+    def plotDetectionEfficiency(self,xmax = 0,xmin=100):
+        import matplotlib.pyplot as plt
+        fig, ax1 = plt.subplots()
 
-                
-    def calcFluence(self,plot=True):
-        E      = self.Constants.NeutrinoCenterEnergies
-        NT     = self.Constants.NTargetProtons
-        xs     = self.Constants.CrossSection
-        Deff   = self.Constants.DetectionEfficiency
-        Lambda = self.Constants.NeutrinoSpectrumPDF
-
-        if plot:
-            fig, ax1 = plt.subplots()
-
-        for i in range(len(self.GravitationalWaves.Name)):
-            lower_CL = self.FCLowerLimits[i]
-            upper_CL = self.FCUpperLimits[i]
-            fluence_lower = []
-            fluence_upper = []
-            for j in range(len(E)):
-                fluence_lower.append(lower_CL/(NT*xs[j]*Deff[j]*Lambda[j]))
-                fluence_upper.append(upper_CL/(NT*xs[j]*Deff[j]*Lambda[j]))
-
-            if plot:
-                plt.plot(E,fluence_upper,label = self.GravitationalWaves.Name[i])
-                #plt.fill_between(E,fluence_lower,fluence_upper)
-            ax1.set_yscale("log")
-            plt.xlabel('Energy [MeV]')
-            plt.ylabel('Fluence [cm-2]')
-            plt.legend()
-            lower_limit = []
-        plt.savefig(self.DataPaths.pdfLocation+'calcFluence.pdf', format='pdf', dpi=200, bbox_inches='tight')
-        print(self.DataPaths.pdfLocation+'calcFluence.pdf')
+        plt.plot(self.Constants.NeutrinoCenterEnergies,
+                 self.DetectionEfficiency,
+                 label = 'Detection Efficiency',linewidth = 2)
+        
+        plt.axvline(x = 1.8,linestyle=':',color = 'k')
+        
+        ymax = 1.0
+        ymin = 0
+        plt.axis([xmin,xmax,ymin,ymax])
+        plt.xlabel('True Neutrino Energy [MeV]')
+        plt.ylabel(r'Detection Efficiency')
+        plt.legend()
+        
+        plt.savefig(self.DataPaths.pdfLocation+'/plotDetectionEfficiency.pdf', format='pdf', dpi=200, bbox_inches='tight')
+        print(self.DataPaths.pdfLocation+'/plotDetectionEfficiency.pdf')
         plt.show()
-        return
             
+        return 
+    
+    def plotCrossSection(self,*arg):
+        import matplotlib.pyplot as plt
+        fig, ax1 = plt.subplots()
+        
+        for i in range(len(arg)):
+            energy, cs = np.loadtxt(arg[i],unpack=True)
+            plt.plot(energy,cs,label = 'XSFile '+str(i),linewidth = len(arg)*2-i*2)
+        
+        plt.plot(self.Constants.NeutrinoCenterEnergies,self.Constants.CrossSection,label = 'Current KLZFit XS',linewidth = 1)
+        
+        plt.axvline(x=1.8,linestyle=':',color = 'k')
+        
+        ymax = max(self.Constants.CrossSection)
+        ymin = sorted(list(set(self.Constants.CrossSection)))[2]
+        xmax = max(self.Constants.NeutrinoCenterEnergies)
+        xmin = min(self.Constants.NeutrinoCenterEnergies)
+        
+        plt.axis([0,xmax,ymin,ymax])
+        ax1.set_yscale('log')
+        plt.xlabel('Neutrino Energy [MeV]')
+        plt.ylabel(r'IBD Cross Section (cm$^2$)')
+        plt.legend()
+        plt.savefig(self.DataPaths.pdfLocation+'/plotCrossSection.pdf', format='pdf', dpi=200, bbox_inches='tight')
+        print(self.DataPaths.pdfLocation+'/plotCrossSection.pdf')
+        plt.show()
             
-            
-            
+        return             
             

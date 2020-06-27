@@ -1,0 +1,54 @@
+import numpy as np
+import ROOT,mydef
+
+##
+H0 = 67.15 #km/s/Mpc
+Omega_m = 0.317
+Omega_d = 0.683
+c = 299792.458 #km/s
+##
+
+zList = np.arange(0.01,10,0.01)
+dz = zList[1] - zList[0]
+
+integral = c/H0 * dz / np.sqrt(Omega_m * (1+zList)**3 + Omega_d)
+
+dList_c = []
+for line in range(len(zList)):
+    dList_c.append( np.sum(integral[0:line]))
+    pass
+
+dList_c = np.array(dList_c)
+dList_p = dList_c/(1+zList)
+dList_l = dList_c*(1+zList)
+
+g0=mydef.make_graph( xList=zList, yList=dList_c, name='hoge', 
+                     title='Cosmological distance', xtitle='Redshift', ytitle='Distance [Mpc]', 
+                     iColor=1, iSize=1.2, iStyle=2, 
+                     errPlot=False,errxList=None, erryList=None, xmin=None, xmax=None, ymin=0, ymax=20e+3)
+
+g1=mydef.make_graph( xList=zList, yList=dList_p, name='hoge', 
+                     title='Cosmological distance', xtitle='Redshift', ytitle='Distance [Mpc]', 
+                     iColor=2, iSize=1.2, iStyle=2, 
+                     errPlot=False,errxList=None, erryList=None, xmin=None, xmax=None, ymin=None, ymax=None)
+
+g2=mydef.make_graph( xList=zList, yList=dList_l, name='hoge', 
+                     title='Cosmological distance', xtitle='Redshift', ytitle='Distance [Mpc]', 
+                     iColor=4, iSize=1.2, iStyle=2, 
+                     errPlot=False,errxList=None, erryList=None, xmin=None, xmax=None, ymin=None, ymax=None)
+
+ROOT.gROOT.SetStyle('Plain')
+ROOT.gROOT.SetBatch(False)
+
+
+c0 = ROOT.TCanvas('plot', 'plot', 600, 600)
+c0.Divide(1,1)
+c0.Draw()
+c0.cd(1)
+
+
+g0.Draw('AL')
+g1.Draw('L')
+g2.Draw('L')
+#c0.cd(1).SetGridx()
+#c0.cd(1).SetGridy()
