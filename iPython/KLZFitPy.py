@@ -20,7 +20,7 @@ class DataPaths:
 
 class Constants:
     def __init__(self):
-        self.H0 = 67.66                #Hubble constant (km/s/Mpc). From Planck (2018) 
+        self.H0 = 67.66                # Hubble constant (km/s/Mpc). From Planck (2018) 
         self.OmegaLambda = 0.6889      # Cosmilogical constant
         self.OmegaMatter = 0.315       # Omega matter density 
         self.c = 299792458             # Speed of light
@@ -35,7 +35,9 @@ class Constants:
         #self.RealTime = float(3600*24*365)     # The realtime of the data. 
         #self.LiveTimeEfficiency = self.LiveTime/self.RealTime 
         #self.NeutrinoCenterEnergies = np.linspace(1.8,100,983)
+        
         self.NeutrinoCenterEnergies = np.linspace(0,100,1001)
+        #self.NeutrinoCenterEnergies_True = self.NeutrinoCenterEnergies+0.78
         
         #self.DetectionEfficiency = np.asarray([(0.5*i)/(100)+0.5 for i in self.NeutrinoCenterEnergies])
         #em2_spectrum = np.asarray([i**-2 for i in self.NeutrinoCenterEnergies])
@@ -69,8 +71,8 @@ class GravitationalWaveClass:
         self.Name           = GWArray[:,0]
         self.Time           = np.asarray(GWArray[:,1]).astype(float)
         self.Distance       = np.asarray(GWArray[:,2]).astype(float)
-        self.Distance_m     = np.asarray(GWArray[:,3]).astype(float)
-        self.Distance_p     = np.asarray(GWArray[:,4]).astype(float)
+        self.err_neg     = np.asarray(GWArray[:,3]).astype(float)
+        self.err_pos     = np.asarray(GWArray[:,4]).astype(float)
         return
     
 class NeutrinoClass:
@@ -107,6 +109,7 @@ class KLZFit:
         # linear interp to the energy values that we are using in the analysis
         efficiency = np.interp(self.Constants.NeutrinoCenterEnergies, energy, efficiency)
         self.DetectionEfficiency = efficiency
+        #self.DetectionEfficiency_ = efficiency
         return 
    
 
@@ -184,7 +187,10 @@ class KLZFit:
         neutrino_array = []
         for i in range(len(data)):
             neutrino_array.append(np.ndarray.tolist(data[i]))
-            
+        
+        Message = 'Found '+str(len(neutrino_array)) +'Number of neutrinos'
+        os.write(1, Message.encode())
+        
         neutrino_array            = np.asarray(neutrino_array) 
         NeutrinoEvents            = NeutrinoClass(neutrino_array)
         self.Neutrinos            = NeutrinoEvents
