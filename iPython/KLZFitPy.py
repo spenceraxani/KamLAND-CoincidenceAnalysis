@@ -359,7 +359,8 @@ class KLZFit:
                 return const * 1./((1+x)**2 * np.sqrt(Ol+Om*(1+x)**3))
             return quad(func, 0., z)[0]
 
-        NExp_accidental_events= 0
+        #NExp_accidental_events= 0
+        
         for i in range(len(self.GravitationalWaves.Time)):
             GW_distance = self.GravitationalWaves.Distance[i]
             average_time_window = self.Constants.NeutrinoEmissionRange[1]-\
@@ -368,6 +369,13 @@ class KLZFit:
                                     self.Constants.EventTimeSpan
                         
             GW_time = self.GravitationalWaves.Time[i]
+            
+            # Accidental rate = 2 * Neutrino Rate * GW Rate * Time window
+            
+            NExp_accidental_events_low = 0
+            NExp_accidental_events_high = 0
+            window_range = (self.Constants.NeutrinoEmissionRange[1] - self.Constants.NeutrinoEmissionRange[0] + self.Constants.EventTimeSpan)
+            print()
             
             if plot_GW:
                 plt.vlines(GW_time, ymin = 0,ymax = 100,linestyles='--')
@@ -382,8 +390,18 @@ class KLZFit:
                             self.Constants.EventTimeSpan, 
                             facecolor='k',alpha=0.2)
             
-            NExp_accidental_events += 2 * self.NeutrinoRateExpectation * average_time_window 
+                max_TOF = neutrinoTimeOfFlight(self.GravitationalWaves.Distance[i],1.8)
+            
+                NExp_accidental_events_low += 2 *\
+                                self.NeutrinoRateExpectation *\
+                                1. *\
+                                window_range
         
+                NExp_accidental_events_high += 2 *\
+                                self.NeutrinoRateExpectation *\
+                                1. *\
+                                (window_range+max_TOF)
+            
         neutrino_colors = []
         
         for j in range(len(self.Neutrinos.Time)):
@@ -394,7 +412,8 @@ class KLZFit:
                 p = plt.errorbar(x, y,yerr=[ym,yp], xerr = [0], fmt='o',ms=1, mew=1)
                 neutrino_colors.append(p[0].get_color())
         
-        plt.text(xmax*0.98,ymax*1.05, 'Total Accidental Exp. = '+str(np.round(NExp_accidental_events,1)) +' Counts',
+        plt.text(xmax*0.98,ymax*1.05, 'Total Accidental Exp. = '+str(np.round(NExp_accidental_events_low,2)) +\
+                         '-'+str(np.round(NExp_accidental_events_high,2))+' Events',
                  rotation = 0,va = 'top',ha='right',size=10,color = 'k')
         
         self.NeutrinoColors = np.asarray(neutrino_colors)
@@ -414,8 +433,8 @@ class KLZFit:
         # The absolute maximum time window, assuming lowest energy (1.8MeV), and highest mass (1eV).
         import matplotlib.pyplot as plt
 
-        def neutrinoTimeOfFlight(distance_Mpc,Energy_MeV):
-            mn = 1.
+        def neutrinoTimeOfFlight(distance_Mpc, Energy_MeV):
+            mn = self.Constants.neutrinoMass
             H0 = self.Constants.H0 * 1000/(3.08568e22)
             Ol = self.Constants.OmegaLambda
             Om =  self.Constants.OmegaMatter
@@ -427,7 +446,7 @@ class KLZFit:
             def func(x):
                 return const * 1./((1+x)**2 * np.sqrt(Ol+Om*(1+x)**3))
             return quad(func, 0., z)[0]
-
+        
         for i in range(len(self.GravitationalWaves.Time)):
             fig, ax1 = plt.subplots()
             GW_distance = self.GravitationalWaves.Distance[i]
@@ -443,8 +462,16 @@ class KLZFit:
                             self.Constants.NeutrinoEmissionRange[1]+
                             neutrinoTimeOfFlight(GW_distance,1.8)+
                             self.Constants.EventTimeSpan, 
-                            facecolor='k',alpha=0.2)
-            
+                            facecolor='k',alpha=0.1)
+                
+                plt.axvspan(self.Constants.NeutrinoEmissionRange[0],
+                            self.Constants.NeutrinoEmissionRange[1], 
+                            facecolor='k',alpha=0.1)
+                
+                plt.axvspan(self.Constants.NeutrinoEmissionRange[0],
+                            self.Constants.NeutrinoEmissionRange[1]+self.Constants.EventTimeSpan, 
+                            facecolor='k',alpha=0.1)
+                
             for j in range(len(self.Neutrinos.Time)):
                     x  = [self.Neutrinos.Time[j]-GW_time]
                     y  = [self.Neutrinos.Energy[j]]
@@ -452,23 +479,35 @@ class KLZFit:
                     yp = [self.Neutrinos.Energy_p[j]]
                     p = plt.errorbar(x, y,yerr=[ym,yp], xerr = [0], fmt='o', color = self.NeutrinoColors[j], ms=3, mew=1)
 
+                    
             tof_1p8MeV = neutrinoTimeOfFlight(GW_distance,1.8)
-            plt.axis([(-0.1*tof_1p8MeV) + self.Constants.NeutrinoEmissionRange[0],
-                      self.Constants.NeutrinoEmissionRange[1]+1.1*neutrinoTimeOfFlight(GW_distance,1.8),
+            plot_extent = 0.1*(self.Constants.NeutrinoEmissionRange[1]+tof_1p8MeV+self.Constants.EventTimeSpan)
+            
+            plt.axis([self.Constants.NeutrinoEmissionRange[0]-plot_extent,
+                      self.Constants.NeutrinoEmissionRange[1]+tof_1p8MeV+self.Constants.EventTimeSpan + plot_extent,
                       0,ymax])
             
             plt.vlines(self.Constants.NeutrinoEmissionRange[0], 
                        ymin = 0,ymax = 100,linestyles='-')
+            
             plt.vlines(self.Constants.NeutrinoEmissionRange[1]+
-                       neutrinoTimeOfFlight(GW_distance,1.8)+
+                       tof_1p8MeV+
                        self.Constants.EventTimeSpan, 
                        ymin = 0,ymax = 100,linestyles='-')
             
+            plt.vlines(self.Constants.NeutrinoEmissionRange[1],
+                       ymin = 0,ymax = 100,linestyles=':')
+            
+            plt.vlines(self.Constants.NeutrinoEmissionRange[1]+
+                       self.Constants.EventTimeSpan, 
+                       ymin = 0,ymax = 100,linestyles=':')
+            
+            plt.title(self.GravitationalWaves.Name[i]+' ('+str(int(self.GravitationalWaves.Distance[i]))+'Mpc)')
+
             plt.xlabel('Time [s]')
             plt.ylabel('Energy [MeV]')
             plt.savefig(self.DataPaths.pdfLocation+'/plotEachEvents'+str(i)+'.pdf', format='pdf', dpi=200, bbox_inches='tight')
             print(self.DataPaths.pdfLocation+'/plotAllEvents'+str(i)+'.pdf')
-        
             plt.show()
             
         return 
@@ -595,7 +634,7 @@ class KLZFit:
             lower_limit = []
             
         plt.axvline(x = 1.8,linestyle=':',color = 'k')
-        
+        plt.xlim([0,100])
         plt.savefig(self.DataPaths.pdfLocation+'calcFluence.pdf', format='pdf', dpi=200, bbox_inches='tight')
         print(self.DataPaths.pdfLocation+'calcFluence.pdf')
         plt.show()
@@ -657,8 +696,17 @@ class KLZFit:
                     else:
                         accepted_values.append(sorted_n[k])
                         break
+                        
                 n_low.append(min(accepted_values))
-                n_high.append(max(accepted_values))
+                if len(accepted_values) == 1:
+                    n_high.append(1)
+                else:
+                    n_high.append(max(accepted_values))
+
+                #n_low.append(min(accepted_values))
+                #n_high.append(max(accepted_values))
+                #
+                
             
             n_low = np.asarray(n_low)
             n_high = np.asarray(n_high)
@@ -700,7 +748,7 @@ class KLZFit:
 
             
             
-    def plotTOF(self,Mn):
+    def plotNeutrinoTOF(self,Mn):
         def neutrinoTimeOfFlight(distance_Mpc,Energy_MeV):
             mn = Mn #self.Constants.neutrinoMass
             H0 = self.Constants.H0 * 1000/(3.08568e22)
@@ -749,7 +797,7 @@ class KLZFit:
             # if plot_realization==True, plot the fake neutrinos as well as a histogram.
             if plot_realization:
                 # The neutrino events energy is a prompt energy
-                print(min(self.Neutrinos.Energy))
+                # print(min(self.Neutrinos.Energy))
                 
                 counts = plt.hist(self.Neutrinos.Energy, bins = self.Constants.NeutrinoCenterEnergies,
                          weights = np.ones(len(self.Neutrinos.Energy))/len(self.Neutrinos.Energy),
